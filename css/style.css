@@ -850,6 +850,78 @@ section {
   color: var(--color-text-soft);
 }
 
+/* ---------- legal pages ---------- */
+
+.legal h3 {
+  font-size: 15px;
+  margin-top: 1.8em;
+}
+
+.legal p {
+  font-size: 14px;
+  color: var(--color-text-soft);
+}
+
+.legal ol {
+  margin: 0 0 1em;
+  padding-left: 1.4em;
+  list-style: decimal;
+}
+
+.legal ol li {
+  font-size: 14px;
+  color: var(--color-text-soft);
+  margin-bottom: 0.6em;
+}
+
+.legal-date {
+  text-align: right;
+  font-size: 13px;
+}
+
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.legal-table th,
+.legal-table td {
+  text-align: left;
+  padding: 14px 10px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.legal-table th {
+  width: 34%;
+  color: var(--color-text-soft);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+@media (max-width: 560px) {
+  .legal-table,
+  .legal-table tbody,
+  .legal-table tr,
+  .legal-table th,
+  .legal-table td {
+    display: block;
+    width: auto;
+  }
+
+  .legal-table tr {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .legal-table th,
+  .legal-table td {
+    border-bottom: none;
+    padding: 2px 0;
+  }
+}
+
 /* ---------- footer ---------- */
 
 #site-footer {
