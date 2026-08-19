@@ -152,12 +152,16 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
     const full = ev.remaining <= 0;
     const card = document.createElement("div");
     card.className = "event-card" + (full ? " full" : "");
+    const applyLink = !full && ev.lineUrl
+      ? `<a href="${ev.lineUrl}" target="_blank" rel="noopener" class="link-arrow">LINEで申し込む →</a>`
+      : "";
     card.innerHTML = `
       <div class="date-badge"><span class="d">${d}</span><span class="m">${m}</span></div>
       <div>
         <h4>${ev.title}</h4>
         <p>${ev.time ? ev.time + "　" : ""}${ev.place || ""}</p>
         <div class="slots">${full ? "満席" : `残り${ev.remaining}枠 / 定員${ev.capacity}名`}</div>
+        ${applyLink}
       </div>
     `;
     listEl.appendChild(card);
