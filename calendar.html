@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>カレンダー | MamaLima Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div data-include="/components/header.html"></div>
+
+<section>
+  <div class="wrap">
+    <h1 class="section-title">カレンダー</h1>
+    <p class="section-sub">最新のイベント・ワークショップの予定です。日付をタップすると詳細にジャンプします。</p>
+
+    <div class="calendar" data-calendar="full" data-list-target="#event-list">
+      <div class="calendar-head">
+        <button class="prev-month" aria-label="前の月">‹</button>
+        <span class="month-label"></span>
+        <button class="next-month" aria-label="次の月">›</button>
+      </div>
+      <div class="calendar-grid"></div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:2.4em;">今後のイベント</h2>
+    <div id="event-list" class="event-list"></div>
+  </div>
+</section>
+
+<div data-include="/components/footer.html"></div>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<section class="contact-form-section">
+  <div class="wrap">
+    <h2 class="section-title">まずは無料相談からどうぞ🌸</h2>
+    <p class="section-sub">どんな小さな不安でも、お気軽にご連絡ください。</p>
+
+    <form id="contact-form" class="card" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="card-body">
+        <div class="form-field">
+          <label for="cf-name">お名前 *</label>
+          <input type="text" id="cf-name" name="name" placeholder="例：山田　花子" required>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-email">メールアドレス *</label>
+          <input type="email" id="cf-email" name="email" placeholder="メールアドレスを入力" required>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-age">お子様の年齢 *</label>
+          <input type="text" id="cf-age" name="child_age" placeholder="例：6ヶ月、1歳3ヶ月" required>
+        </div>
+
+        <div class="form-field">
+          <label>ご希望のメニュー *</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="menu" value="3ヶ月継続サポート"> 3ヶ月継続サポート</label>
+            <label><input type="checkbox" name="menu" value="マンツーマン単発レッスン"> マンツーマン単発レッスン</label>
+            <label><input type="checkbox" name="menu" value="グループレッスン"> グループレッスン</label>
+            <label><input type="checkbox" name="menu" value="個人無料相談"> 個人無料相談</label>
+            <label><input type="checkbox" name="menu" value="その他、まだ迷ってる"> その他、まだ迷ってる</label>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-method">ご希望の受講方法</label>
+          <select id="cf-method" name="method">
+            <option value="">選択してください</option>
+            <option value="対面">対面</option>
+            <option value="オンライン">オンライン</option>
+            <option value="まだ決めていない">まだ決めていない</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-message">お悩みやご相談 *</label>
+          <textarea id="cf-message" name="message" placeholder="気になっていること、聞いてみたいことなど、なんでもお気軽にどうぞ" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-dark btn-block">送信する</button>
+        <p class="form-status" id="cf-status"></p>
+      </div>
+    </form>
+
+    <p class="form-note">
+      奈良県内での発達とタッチケアのクラスを開催しております（オンラインは全国対応）。<br>
+      ご質問やご予約の詳細など、お気軽にお問い合わせください。<br>
+      Email: <a href="mailto:mamalima.room@gmail.com">mamalima.room@gmail.com</a>
+    </p>
+  </div>
+</section>

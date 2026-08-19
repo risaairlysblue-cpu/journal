@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2026-08-19",
+    "title": "ベビー・キッズアロマ認定講座",
+    "type": "講座",
+    "time": "10:30〜12:00",
+    "place": "対面（奈良）",
+    "capacity": 6,
+    "remaining": 2,
+    "lineUrl": "https://line.me/R/ti/p/@your-line-id"
+  },
+  {
+    "date": "2026-09-06",
+    "title": "グループレッスン",
+    "type": "レッスン",
+    "time": "10:00〜11:30",
+    "place": "対面（奈良）",
+    "capacity": 4,
+    "remaining": 0,
+    "lineUrl": "https://line.me/R/ti/p/@your-line-id"
+  },
+  {
+    "date": "2026-09-20",
+    "title": "季節のアロマワークショップ",
+    "type": "ワークショップ",
+    "time": "13:00〜14:30",
+    "place": "対面（奈良）",
+    "capacity": 8,
+    "remaining": 5,
+    "lineUrl": "https://line.me/R/ti/p/@your-line-id"
+  }
+]
