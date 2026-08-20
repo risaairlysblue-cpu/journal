@@ -850,6 +850,24 @@ section {
   color: var(--color-text-soft);
 }
 
+/* ---------- full-bleed section image ---------- */
+
+.section-full {
+  padding: 0;
+  background: #fdfcfa;
+}
+
+.section-full img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* 画像の実寸を上限にして拡大ボケを防ぐ。
+     セクション背景を画像の地色と同色にしてあるため、
+     これより広い画面でも継ぎ目なく全幅に見える。 */
+  max-width: 1536px;
+  margin: 0 auto;
+}
+
 /* ---------- legal pages ---------- */
 
 .legal h3 {
