@@ -62,7 +62,7 @@ images/              写真を入れるフォルダ（今はすべて仮の枠�
 簡易サーバーを立てて確認してください。
 
 ```bash
-cd /path/to/journal
+cd /path/to/mamalima
 python3 -m http.server 8000
 # ブラウザで http://localhost:8000 を開く
 ```
@@ -97,6 +97,6 @@ python3 -m http.server 8000
 1. このリポジトリの GitHub 上で「Settings」→ 左メニューの「Pages」を開く
 2. 「Build and deployment」の「Source」を `Deploy from a branch` にする
 3. 「Branch」で `claude/wix-hp-rebuild-jxtcmb`（このリポジトリのメインブランチ）と `/ (root)` を選んで Save
-4. 数分待つと `https://risaairlysblue-cpu.github.io/journal/` で公開されます
+4. 数分待つと `https://risaairlysblue-cpu.github.io/mamalima/` で公開されます
 
 独自ドメインを使いたくなったら、同じ Pages 設定画面で「Custom domain」に設定できます。
