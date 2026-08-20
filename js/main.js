@@ -157,11 +157,18 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
     const applyLink = !full && ev.lineUrl
       ? `<a href="${ev.lineUrl}" target="_blank" rel="noopener" class="link-arrow">LINEで申し込む →</a>`
       : "";
+
+    // 時間・場所・料金のうち、入力されているものだけを並べる
+    const meta = [];
+    if (ev.time) meta.push(ev.time);
+    if (ev.place) meta.push(ev.place);
+    if (ev.price != null) meta.push(`¥${ev.price.toLocaleString()}（税込）`);
+
     card.innerHTML = `
       <div class="date-badge"><span class="d">${d}</span><span class="m">${m}</span></div>
       <div>
         <h4>${ev.title}</h4>
-        <p>${ev.time ? ev.time + "　" : ""}${ev.place || ""}</p>
+        ${meta.length ? `<p>${meta.join("　")}</p>` : ""}
         <div class="slots">${full ? "満席" : `残り${ev.remaining}枠 / 定員${ev.capacity}名`}</div>
         ${applyLink}
       </div>

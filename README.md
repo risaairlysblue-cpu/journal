@@ -38,11 +38,16 @@ images/              写真を入れるフォルダ（今はすべて仮の枠�
   "type": "ワークショップ",
   "time": "13:00〜14:30",
   "place": "対面（奈良）",
+  "price": 1000,
   "capacity": 8,
   "remaining": 5,
-  "lineUrl": "https://line.me/R/ti/p/@your-line-id"
+  "lineUrl": "https://hpjouynr.autosns.app/line"
 }
 ```
+
+`time` `place` `price` は空（または項目ごと省略）にすると、その部分は表示されません。
+`price` は数値で書きます（`1000` → 「¥1,000（税込）」と表示）。
+`remaining` を `0` にすると「満席」と表示され、申し込みリンクも消えます。
 
 配列に追加・削除するだけで、カレンダーページ（`calendar.html`）と
 セルフケアページの「最新のイベントとワークショップ」欄に自動反映されます。
