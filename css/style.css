@@ -852,19 +852,23 @@ section {
 
 /* ---------- full-bleed section image ---------- */
 
+/* 画面幅いっぱいに画像を敷くセクション。
+   --bleed-bg  … 画像の地色（同色にすることで画像の端が見えなくなる）
+   --bleed-max … 画像の実寸幅（これ以上引き伸ばさず拡大ボケを防ぐ） */
 .section-full {
   padding: 0;
-  background: #fdfcfa;
+  background: var(--bleed-bg, #fdfcfa);
+}
+
+.section-full a {
+  display: block;
 }
 
 .section-full img {
   display: block;
   width: 100%;
   height: auto;
-  /* 画像の実寸を上限にして拡大ボケを防ぐ。
-     セクション背景を画像の地色と同色にしてあるため、
-     これより広い画面でも継ぎ目なく全幅に見える。 */
-  max-width: 1536px;
+  max-width: var(--bleed-max, 1536px);
   margin: 0 auto;
 }
 
