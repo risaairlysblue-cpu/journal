@@ -5,9 +5,11 @@ async function includePartials() {
   await Promise.all(
     Array.from(nodes).map(async (node) => {
       const src = node.getAttribute("data-include");
+      const base = src.slice(0, src.indexOf("components/"));
       try {
         const res = await fetch(src);
-        node.outerHTML = await res.text();
+        const html = await res.text();
+        node.outerHTML = html.replaceAll("{{base}}", base);
       } catch (err) {
         console.error("include failed:", src, err);
       }
@@ -75,7 +77,7 @@ function initContactForm() {
 // ---------- calendar ----------
 
 const DOW = ["日", "月", "火", "水", "木", "金", "土"];
-const EVENTS_URL = "/data/events.json";
+const EVENTS_URL = "data/events.json";
 
 function pad2(n) {
   return String(n).padStart(2, "0");
