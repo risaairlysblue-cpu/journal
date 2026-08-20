@@ -852,6 +852,60 @@ section {
 
 /* ---------- full-bleed section image ---------- */
 
+/* ---------- レッスン3種の横並び ---------- */
+
+/* 3枚並べるぶん、この区画だけ幅を広げる */
+.wrap.wrap-wide {
+  max-width: 1100px;
+}
+
+.lesson-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* 狭い画面では縦積み、広い画面で3列に */
+@media (min-width: 900px) {
+  .lesson-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.lesson-grid .card {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.lesson-grid .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* 文章量が違ってもボタンの位置を揃える */
+.lesson-grid .card-body .btn {
+  margin-top: auto;
+}
+
+/* レッスンごとの色分け（旧Wixサイトの配色を採用）
+   3ヶ月継続サポート=ピンク / マンツーマン単発=グリーン / グループ=ベージュ */
+.tone-lesson-pink .card-body { background: #f7ece9; }
+.tone-lesson-pink .badge     { background: #ebd2cd; color: #7a4a3f; }
+.tone-lesson-pink .btn       { background: #916359; color: #fff; }
+.tone-lesson-pink .checklist li::before { color: #916359; }
+
+.tone-lesson-sage .card-body { background: #eaefe7; }
+.tone-lesson-sage .badge     { background: #d2dccd; color: #3f5233; }
+.tone-lesson-sage .btn       { background: #5e7e4e; color: #fff; }
+.tone-lesson-sage .checklist li::before { color: #5e7e4e; }
+
+.tone-lesson-tan .card-body  { background: #f3f0ea; }
+.tone-lesson-tan .badge      { background: #e6e1d7; color: #6b5a34; }
+.tone-lesson-tan .btn        { background: #857451; color: #fff; }
+.tone-lesson-tan .checklist li::before { color: #857451; }
+
 /* 画面幅いっぱいに画像を敷くセクション。
    --bleed-bg  … 画像の地色（同色にすることで画像の端が見えなくなる）
    --bleed-max … 画像の実寸幅（これ以上引き伸ばさず拡大ボケを防ぐ） */
