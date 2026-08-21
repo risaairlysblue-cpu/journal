@@ -226,7 +226,7 @@ section {
   flex: none;
 }
 
-@media (min-width: 860px) {
+@media (min-width: 960px) {
   .nav-cta {
     display: inline-flex;
   }
@@ -306,7 +306,7 @@ section {
   cursor: pointer;
 }
 
-@media (min-width: 860px) {
+@media (min-width: 960px) {
   .nav-toggle,
   .nav-close {
     display: none;
@@ -326,7 +326,7 @@ section {
   .nav-menu > ul {
     flex-direction: row;
     align-items: center;
-    gap: 26px;
+    gap: 18px;
     font-size: 13px;
     letter-spacing: 0.04em;
   }
@@ -1287,4 +1287,740 @@ section {
   .card-body {
     padding: 24px 22px 26px;
   }
+}
+
+/* ==========================================================================
+   下層ページ共通レイアウト
+   （mamalima-clone の各ページCSSを、既存のトークン・ボタンに載せ替えたもの。
+     .section-inner / .heading-center / カード類は8ページで共通利用する）
+   ========================================================================== */
+
+/* 下層ページの本文幅。トップの .wrap より広い */
+.section-inner {
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+/* 読み物系（文章が続くセクション）はさらに狭く */
+.section-inner.narrow {
+  width: min(820px, calc(100% - 40px));
+}
+
+.heading-center {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.heading-center h2 {
+  margin: 0;
+  font-size: clamp(26px, 3.2vw, 42px);
+}
+
+/* 英字の小見出し。薄い地色に載せる文字なので濃いローズを使う */
+.section-kicker {
+  margin: 0 0 12px;
+  color: var(--color-primary-dark);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+/* ---------- 下層ページのファーストビュー ---------- */
+
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 92px 0 100px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(168, 184, 154, 0.16), transparent 21%),
+    radial-gradient(circle at 90% 70%, rgba(201, 150, 138, 0.17), transparent 22%),
+    var(--color-bg);
+}
+
+.page-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 42px;
+  align-items: center;
+}
+
+.page-hero h1 {
+  margin: 0 0 24px;
+  font-size: clamp(27px, 3.6vw, 50px);
+  line-height: 1.62;
+  letter-spacing: 0.04em;
+}
+
+.page-label {
+  margin: 0 0 12px;
+  color: var(--color-primary-dark);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.page-lead {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 15px;
+  line-height: 2;
+}
+
+/* 中央寄せタイプのファーストビュー（レッスン一覧・ママの声） */
+.page-hero.center .section-inner {
+  max-width: 820px;
+  text-align: center;
+}
+
+/* ファーストビューの写真（有機的なブロブ型） */
+.hero-photo {
+  width: min(84%, 420px);
+  margin: 0 auto;
+  aspect-ratio: 0.92;
+  object-fit: cover;
+  border-radius: 48% 52% 45% 55% / 45% 44% 56% 55%;
+  box-shadow: var(--shadow-card);
+}
+
+/* 価格の見せ方（ファーストビュー内） */
+.hero-price {
+  margin: 26px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.hero-price strong {
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: clamp(26px, 3.4vw, 34px);
+  font-weight: 500;
+}
+
+.hero-price small,
+.hero-price span {
+  color: var(--color-text-soft);
+  font-size: 13px;
+}
+
+/* ---------- 箇条書きカード（こんな方におすすめ） ---------- */
+
+.recommend-list {
+  display: grid;
+  gap: 14px;
+}
+
+.recommend-item {
+  padding: 20px 24px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.recommend-item::before {
+  content: "✓";
+  margin-right: 10px;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+/* ---------- 番号付きカードのグリッド（レッスン内容・想いなど） ---------- */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .info-grid { grid-template-columns: repeat(2, 1fr); }
+  .info-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 940px) {
+  .info-grid { grid-template-columns: repeat(3, 1fr); }
+  .info-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+.info-card {
+  padding: 32px 26px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.info-card .num {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--color-primary-dark);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.info-card h3 {
+  margin: 0 0 14px;
+  font-size: 19px;
+}
+
+.info-card p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* ---------- STEP形式の流れ ---------- */
+
+.flow-list {
+  max-width: 850px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+.flow-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 26px 24px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+@media (min-width: 640px) {
+  .flow-item {
+    grid-template-columns: 92px 1fr;
+    gap: 22px;
+    padding: 28px;
+  }
+}
+
+.flow-item > .num {
+  color: var(--color-primary-dark);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.flow-item h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.flow-item p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* ---------- 見出し＋本文の2カラム ---------- */
+
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 26px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .split-grid {
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 70px;
+  }
+}
+
+.split-grid h2 {
+  margin: 0;
+  font-size: clamp(24px, 2.9vw, 38px);
+}
+
+.split-grid p {
+  margin: 0 0 18px;
+  color: var(--color-text-soft);
+  line-height: 2.1;
+}
+
+.split-grid p:last-child { margin-bottom: 0; }
+
+/* 2択の比較カード */
+.compare-cards {
+  display: grid;
+  gap: 16px;
+}
+
+.mini-compare {
+  padding: 25px 26px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.mini-compare h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.mini-compare p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* ---------- 料金カード ---------- */
+
+.price-card {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 44px 24px;
+  text-align: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+@media (min-width: 640px) {
+  .price-card { padding: 48px 42px; }
+}
+
+.price-name {
+  margin: 0 0 12px;
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: 19px;
+}
+
+.price-main strong {
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: clamp(38px, 5vw, 48px);
+  font-weight: 500;
+}
+
+.price-main span {
+  color: var(--color-text-soft);
+  font-size: 12px;
+}
+
+.price-sub {
+  margin: 4px 0 24px;
+  color: var(--color-text-soft);
+  font-size: 14px;
+}
+
+.price-card ul {
+  max-width: 360px;
+  margin: 0 auto 28px;
+  text-align: left;
+  display: grid;
+  gap: 10px;
+  color: var(--color-text-soft);
+  font-size: 14px;
+}
+
+.price-card li::before {
+  content: "✓";
+  margin-right: 8px;
+  color: var(--color-primary-dark);
+}
+
+/* ---------- 締めのボックス（無料相談／注意書き／メッセージ） ---------- */
+
+.callout-box {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 46px 24px;
+  text-align: center;
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+}
+
+@media (min-width: 640px) {
+  .callout-box { padding: 58px 54px; }
+}
+
+.callout-box h2 {
+  margin: 0 0 18px;
+  font-size: clamp(24px, 2.9vw, 38px);
+}
+
+.callout-box > p:not(.section-kicker) {
+  max-width: 620px;
+  margin: 0 auto 26px;
+  color: var(--color-text-soft);
+  line-height: 2.1;
+}
+
+.callout-box > p:last-child { margin-bottom: 0; }
+
+/* 注意書きは左寄せで小さめに */
+.callout-box.notice {
+  max-width: 820px;
+  text-align: left;
+}
+
+.callout-box.notice > p:not(.section-kicker) {
+  max-width: none;
+  margin: 0;
+  font-size: 14px;
+}
+
+.box-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.signature {
+  margin: 32px 0 0;
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: 16px;
+}
+
+/* ---------- プロフィール：数字カード・資格リスト ---------- */
+
+.number-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 700px) {
+  .number-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.number-card {
+  padding: 38px 24px 32px;
+  text-align: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.big-number {
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: clamp(48px, 6vw, 76px);
+  line-height: 1;
+}
+
+.number-card .unit {
+  margin-left: 5px;
+  color: var(--color-primary-dark);
+  font-size: 14px;
+}
+
+.number-card p {
+  margin: 22px 0 0;
+  font-family: var(--font-heading);
+  font-size: 17px;
+}
+
+.qualification-list {
+  overflow: hidden;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.qualification-item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  align-items: center;
+  min-height: 76px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.qualification-item:last-child { border-bottom: 0; }
+
+.qualification-item .num {
+  color: var(--color-primary-dark);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.qualification-item p {
+  margin: 0;
+  font-size: 15px;
+}
+
+/* プロフィール冒頭の肩書きブロック */
+.profile-meta {
+  padding: 20px 24px;
+  margin-bottom: 30px;
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.profile-meta p {
+  margin: 3px 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+}
+
+/* ---------- 読み物ブロック（教室の想い・セルフケア） ---------- */
+
+.story-block {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  line-height: 2.25;
+  letter-spacing: 0.04em;
+}
+
+.story-block p { margin: 0 0 30px; }
+.story-block p:last-child { margin-bottom: 0; }
+
+/* 「Lima＝手」のシンボル */
+.lima-shape {
+  width: min(100%, 380px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+  border-radius: 52% 48% 56% 44% / 47% 56% 44% 53%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), transparent 20%),
+    linear-gradient(145deg, #e8cec5, #f1e1da 52%, #d8e0d0);
+  box-shadow: var(--shadow-card);
+}
+
+.lima-shape span {
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: clamp(42px, 6vw, 68px);
+  letter-spacing: 0.08em;
+}
+
+/* 写真ギャラリー */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+/* ---------- レッスンメニュー一覧：写真＋説明の交互レイアウト ---------- */
+
+.lesson-menu-stack {
+  display: grid;
+  gap: 62px;
+}
+
+.menu-detail-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+@media (min-width: 860px) {
+  .menu-detail-card {
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 60px;
+  }
+
+  .menu-detail-card.reverse .menu-image { order: 2; }
+  .menu-detail-card.reverse .menu-copy { order: 1; }
+}
+
+.menu-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.menu-label {
+  margin: 0 0 10px;
+  color: var(--color-primary-dark);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.menu-copy h2 {
+  margin: 0 0 18px;
+  font-size: clamp(23px, 2.7vw, 34px);
+}
+
+.menu-description {
+  margin: 0 0 22px;
+  color: var(--color-text-soft);
+  font-size: 15px;
+  line-height: 2.05;
+}
+
+.menu-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 5px;
+  margin: 0 0 22px;
+  padding: 18px 20px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.menu-price strong {
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.menu-price span {
+  color: var(--color-text-soft);
+  font-size: 12px;
+}
+
+.menu-price small {
+  flex-basis: 100%;
+  color: var(--color-text-soft);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.check-list {
+  margin: 0 0 28px;
+  display: grid;
+  gap: 11px;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.check-list li::before {
+  content: "✓";
+  margin-right: 9px;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+/* どれを選べばいい？ */
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 860px) {
+  .choice-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.choice-card {
+  padding: 32px 26px;
+  text-align: center;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.choice-card h3 {
+  margin: 0 0 12px;
+  color: var(--color-primary-dark);
+  font-size: 20px;
+}
+
+.choice-card p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* ---------- ママの声：ケース紹介 ---------- */
+
+.case-copy {
+  display: grid;
+  gap: 16px;
+}
+
+/* PCでは Before ／ 一緒に見たこと ／ After を横並びに */
+@media (min-width: 900px) {
+  .case-copy.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .case-copy.cols-3 .case-block { display: flex; flex-direction: column; }
+}
+
+.case-block {
+  padding: 22px 24px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.case-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--color-primary-dark);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.case-block p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 2;
+}
+
+.case-block ul {
+  display: grid;
+  gap: 8px;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.case-block ul li::before {
+  content: "・";
+  color: var(--color-primary-dark);
+}
+
+/* ---------- セルフケア：ワークショップ一覧 ---------- */
+
+.workshop-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (min-width: 860px) {
+  .workshop-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.workshop-item {
+  padding: 24px 16px;
+  text-align: center;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 15px;
+}
+
+@media (max-width: 720px) {
+  .page-hero { padding: 58px 0 72px; }
+  .heading-center { margin-bottom: 32px; }
+  .lesson-menu-stack { gap: 48px; }
+  .story-block { font-size: 15px; line-height: 2.1; }
+  .info-card { padding: 26px 22px; }
+  .recommend-item { padding: 18px 20px; }
 }
