@@ -8,8 +8,10 @@
   --color-bg-soft: #f3ece2;
   --color-text: #4a3b32;
   --color-text-soft: #7a6a5e;
-  --color-primary: #c08f86;
-  --color-primary-dark: #a97a70;
+  /* ローズ。ボタン背景（白文字）と文字色の兼用。
+     白／ベース／淡ベージュのどの背景でも4.5:1以上を確保した濃さ */
+  --color-primary: #8c6056;
+  --color-primary-dark: #8c6056;
   --color-sage: #c3cdb4;
   --color-sage-text: #4f5a3e;
   --color-pink-tag: #f2dcd6;
@@ -893,8 +895,8 @@ section {
    3ヶ月継続サポート=ピンク / マンツーマン単発=グリーン / グループ=ベージュ */
 .tone-lesson-pink .card-body { background: #f7ece9; }
 .tone-lesson-pink .badge     { background: #ebd2cd; color: #7a4a3f; }
-.tone-lesson-pink .btn       { background: #916359; color: #fff; }
-.tone-lesson-pink .checklist li::before { color: #916359; }
+.tone-lesson-pink .btn       { background: var(--color-primary); color: #fff; }
+.tone-lesson-pink .checklist li::before { color: var(--color-primary); }
 
 .tone-lesson-sage .card-body { background: #eaefe7; }
 .tone-lesson-sage .badge     { background: #d2dccd; color: #3f5233; }
@@ -905,6 +907,12 @@ section {
 .tone-lesson-tan .badge      { background: #e6e1d7; color: #6b5a34; }
 .tone-lesson-tan .btn        { background: #857451; color: #fff; }
 .tone-lesson-tan .checklist li::before { color: #857451; }
+
+/* 「人気No.1」はカードの色分けより優先して目立たせる */
+.lesson-grid .badge-popular {
+  background: var(--color-primary);
+  color: #fff;
+}
 
 /* 画面幅いっぱいに画像を敷くセクション。
    --bleed-bg  … 画像の地色（同色にすることで画像の端が見えなくなる）
