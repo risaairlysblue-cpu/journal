@@ -575,28 +575,149 @@ section {
   color: var(--color-primary-dark);
 }
 
-/* ---------- worry grid ---------- */
+/* ---------- 「こんな不安、ありませんか？」セクション ----------
+   もとは1枚のJPGだったものを、見出し・キャプションを実テキストに
+   組み直したもの。イラストだけを切り出して使っている            */
+
+.worry-section {
+  background: #fdfcfa;
+}
+
+.worry-head {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+/* 見出しを小枝ではさむ */
+.worry-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 0 0 18px;
+  font-size: clamp(25px, 4.2vw, 50px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.worry-title .deco {
+  flex: none;
+  width: clamp(30px, 4vw, 56px);
+  height: auto;
+}
+
+/* 右側の小枝は同じ画像を反転して使う */
+.worry-title .deco.flip {
+  transform: scaleX(-1);
+}
+
+.worry-title .accent {
+  color: var(--color-primary-dark);
+}
+
+.worry-lead {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: clamp(13px, 1.5vw, 17px);
+  letter-spacing: 0.02em;
+}
 
 .worry-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 22px;
+  gap: 34px 26px;
 }
 
-@media (min-width: 640px) {
-  .worry-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+@media (min-width: 620px) {
+  .worry-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 940px) {
+  .worry-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 .worry-item {
-  background: rgba(255, 255, 255, 0.86);
-  border: 1px solid var(--color-border);
-  border-radius: 24px;
-  padding: 30px 32px;
+  text-align: center;
+}
+
+/* イラスト。上に番号バッジを重ねる */
+.worry-figure {
+  position: relative;
+  margin: 0 0 16px;
+}
+
+.worry-figure img {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.worry-item p {
+  margin: 0;
   font-family: var(--font-heading);
-  font-size: 16px;
-  line-height: 1.9;
+  font-size: clamp(15px, 1.7vw, 18px);
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+}
+
+/* キャプション内の強調（もとの画像でローズ色だった部分） */
+.worry-item .accent {
+  color: var(--color-primary-dark);
+}
+
+/* 締めの一文 */
+.worry-foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 56px 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(17px, 2.4vw, 30px);
+  letter-spacing: 0.06em;
+}
+
+.worry-foot .deco {
+  flex: none;
+  width: clamp(22px, 2.6vw, 36px);
+  height: auto;
+}
+
+.worry-foot .deco.flip { transform: scaleX(-1); }
+
+.worry-foot .heart {
+  flex: none;
+  width: clamp(16px, 1.9vw, 26px);
+  height: auto;
+}
+
+@media (max-width: 620px) {
+  .worry-head { margin-bottom: 34px; }
+  .worry-grid { gap: 30px; }
+  .worry-figure img { max-width: 290px; }
+
+  /* スマホでは見出しが「ありま／せんか？」のように
+     途中で折り返してしまうので、小枝と余白を詰めて1行に収める */
+  .worry-title {
+    gap: 8px;
+    font-size: min(21px, 4.9vw);
+  }
+
+  .worry-title > span { white-space: nowrap; }
+  .worry-title .deco { width: 22px; }
+
+  .worry-foot {
+    margin-top: 40px;
+    gap: 8px;
+    font-size: min(17px, 3.7vw);
+  }
+
+  .worry-foot > span { white-space: nowrap; }
+  .worry-foot .deco { width: 22px; }
+  .worry-foot .heart { width: 15px; }
 }
 
 /* ---------- stat pills ---------- */
@@ -1277,11 +1398,6 @@ section {
 
   .nav-menu {
     padding-top: 84px;
-  }
-
-  .worry-item {
-    padding: 24px 24px;
-    font-size: 15px;
   }
 
   .card-body {
