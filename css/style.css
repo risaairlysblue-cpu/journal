@@ -480,14 +480,7 @@ section {
 /* 広い画面では2カラム（文章＋写真） */
 @media (min-width: 900px) {
   .hero-inner {
-    grid-template-columns: 0.95fr 1.05fr;
-    gap: 60px;
-    padding: 80px 0 88px;
-    min-height: 640px;
-  }
-
-  .hero-copy {
-    text-align: left;
+    padding: 92px 0 100px;
   }
 }
 
@@ -2076,4 +2069,690 @@ section {
   .story-block { font-size: 15px; line-height: 2.1; }
   .info-card { padding: 26px 22px; }
   .recommend-item { padding: 18px 20px; }
+}
+
+/* ==========================================================================
+   トップページ：最新Wixに合わせたセクション部品
+   ========================================================================== */
+
+/* 見出しの一部にひくピンクのマーカー */
+.marker {
+  background: linear-gradient(transparent 62%, #f1dcd6 62%);
+  padding: 0 2px;
+}
+
+/* ---------- SUPPORT：番号つきの5ステップ ---------- */
+
+.step-row {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+
+.step-row .item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 26px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.step-row .num {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 15px;
+}
+
+.step-row h3 {
+  margin: 0 0 2px;
+  font-size: 19px;
+}
+
+.step-row p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* ---------- アイコン付きの2カラムカード ---------- */
+
+.feature-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.feature-2col .item {
+  padding: 30px 22px;
+  text-align: center;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+}
+
+.feature-2col .ico {
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e7ede2;
+  font-size: 27px;
+}
+
+.feature-2col h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.feature-2col p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* ---------- ご参加の方への特典 ---------- */
+
+.bonus-box {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  border: 2px dashed var(--color-primary);
+  border-radius: var(--radius-lg);
+}
+
+.bonus-box > h3 {
+  margin: 0 0 22px;
+  text-align: center;
+  font-size: 21px;
+}
+
+.bonus-item {
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  background: #fbf1ee;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+}
+
+.bonus-item:last-child { margin-bottom: 0; }
+
+.bonus-item small {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-text-soft);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* ---------- 料金カード（ヘッダー付き） ---------- */
+
+.plan-box {
+  max-width: 620px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+.plan-box .head {
+  padding: 20px 24px;
+  text-align: center;
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 22px;
+}
+
+.plan-box .body { padding: 34px 24px; }
+
+.plan-box .amount {
+  text-align: center;
+  font-family: var(--font-heading);
+  color: var(--color-primary-dark);
+  font-size: clamp(34px, 5vw, 46px);
+  line-height: 1.2;
+}
+
+.plan-box .amount small {
+  color: var(--color-text);
+  font-size: 16px;
+}
+
+.plan-box .amount-sub {
+  margin: 6px 0 26px;
+  text-align: center;
+  color: var(--color-text-soft);
+  font-size: 15px;
+}
+
+/* 日時・場所・対象などの表 */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.spec-table th,
+.spec-table td {
+  padding: 15px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.spec-table th {
+  width: 34%;
+  color: var(--color-text-soft);
+  font-weight: 500;
+}
+
+.spec-table tr:last-child th,
+.spec-table tr:last-child td { border-bottom: 0; }
+
+/* ---------- レッスンメニュー3枚のカード ---------- */
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 46px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (min-width: 940px) {
+  .plan-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+}
+
+.plan-card {
+  position: relative;
+  padding: 46px 26px 30px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 「人気No.1」のリボン */
+.plan-card.is-popular { border-color: var(--color-primary); }
+
+.plan-card .ribbon {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 9px 26px;
+  white-space: nowrap;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 15px;
+}
+
+.plan-card .label {
+  align-self: center;
+  margin-bottom: 16px;
+  padding: 6px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--color-pink-tag);
+  color: var(--color-pink-tag-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.plan-card h3 {
+  margin: 0 0 14px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.plan-card .fee {
+  text-align: center;
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: 30px;
+  line-height: 1.3;
+}
+
+.plan-card .fee-sub {
+  margin: 4px 0 18px;
+  text-align: center;
+  color: var(--color-text-soft);
+  font-size: 13px;
+}
+
+.plan-card > p {
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 1.95;
+}
+
+.plan-card ul {
+  margin: 0 0 24px;
+  display: grid;
+  gap: 9px;
+  color: var(--color-text-soft);
+  font-size: 14px;
+}
+
+.plan-card li::before {
+  content: "・";
+  color: var(--color-primary-dark);
+}
+
+.plan-card .btn { margin-top: auto; }
+
+/* メニューごとのボタン色（Wixに合わせる） */
+.plan-card .btn-sage { background: var(--color-sage); color: #fff; }
+.plan-card .btn-tan  { background: #c6b79d; color: #fff; }
+
+/* ---------- コース比較表 ---------- */
+
+.compare-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.compare-table {
+  width: 100%;
+  min-width: 460px;
+  border-collapse: collapse;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 15px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  line-height: 1.7;
+}
+
+.compare-table thead th {
+  background: var(--color-pink-tag);
+  font-weight: 600;
+}
+
+/* 3ヶ月の列を強調 */
+.compare-table thead th.is-main {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.compare-table tbody th {
+  text-align: left;
+  font-weight: 500;
+  background: var(--color-bg);
+}
+
+.compare-table .dot { color: var(--color-primary); font-size: 17px; }
+.compare-table .none { color: var(--color-text-soft); }
+
+/* ---------- よくあるご質問 ---------- */
+
+.faq-list {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  gap: 13px;
+}
+
+.faq-item {
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-heading);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: "＋";
+  flex: none;
+  color: var(--color-primary);
+  font-size: 18px;
+}
+
+.faq-item[open] summary::after { content: "－"; }
+
+.faq-item .answer {
+  padding: 0 24px 24px;
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 15px;
+  line-height: 2.05;
+}
+
+/* ---------- プロフィール（丸写真） ---------- */
+
+.profile-round {
+  width: min(78%, 320px);
+  aspect-ratio: 1;
+  margin: 0 auto 26px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--color-bg);
+}
+
+/* ---------- 下部に固定するCTA ---------- */
+
+body { padding-bottom: 62px; }
+
+.sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  padding: 13px 20px;
+  text-align: center;
+  background: rgba(255, 253, 249, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--color-border);
+}
+
+.sticky-cta a {
+  color: var(--color-primary-dark);
+  font-weight: 600;
+  font-size: 15px;
+  border-bottom: 1px solid rgba(157, 89, 72, 0.45);
+  padding-bottom: 2px;
+}
+
+@media (max-width: 620px) {
+  .step-row .item { gap: 15px; padding: 18px 18px; }
+  .step-row .num { width: 44px; height: 44px; font-size: 14px; }
+  .step-row h3 { font-size: 17px; }
+  .feature-2col { grid-template-columns: 1fr; }
+  .bonus-box { padding: 26px 18px; }
+  .plan-box .body { padding: 28px 18px; }
+  .spec-table th, .spec-table td { padding: 13px 8px; font-size: 14px; }
+}
+
+/* ==========================================================================
+   最新Wix版トップの追加スタイル
+   ========================================================================== */
+
+/* ヒーローは写真なしの中央寄せ（Wixと同じ） */
+.hero-copy {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-heading);
+  font-size: clamp(19px, 2.4vw, 27px);
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: var(--color-text);
+  margin-bottom: 0.9em;
+}
+
+/* ヒーロー内のバッジは枠線タイプ */
+.hero .badge {
+  display: inline-block;
+  margin-bottom: 1.4em;
+  padding: 11px 24px;
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  font-size: clamp(12px, 1.5vw, 14px);
+  font-weight: 400;
+}
+
+.hero .tag-row { margin: 1.8em 0; }
+
+.hero .btn-block { max-width: 460px; margin: 0 auto; }
+
+/* 左に線を引く強調ボックス */
+.lead-box {
+  margin-top: 2.2em;
+  padding: 26px 26px;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--color-bg-card);
+}
+
+.lead-box p { margin: 0 0 0.7em; }
+.lead-box p:last-child { margin-bottom: 0; color: var(--color-text-soft); }
+
+/* 見出しがタブのように乗るカード */
+.pill-card {
+  position: relative;
+  max-width: 720px;
+  margin: 42px auto 0;
+  padding: 44px 26px 32px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+}
+
+.pill-head {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 11px 30px;
+  white-space: nowrap;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 16px;
+}
+
+.pill-card ul {
+  display: grid;
+  gap: 15px;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.pill-card li {
+  display: flex;
+  gap: 13px;
+}
+
+.pill-card li::before {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-top: 0.65em;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+/* サブカラーのタグ */
+.tag.tag-sage {
+  background: #e7ede2;
+  color: var(--color-sage-text);
+}
+
+/* PCだけで効かせる改行 */
+.pc-only { display: none; }
+
+@media (min-width: 820px) {
+  .pc-only { display: inline; }
+}
+
+@media (max-width: 620px) {
+  .pill-card { padding: 40px 20px 28px; }
+  .pill-head { font-size: 14px; padding: 9px 22px; }
+  .lead-box { padding: 22px 20px; }
+}
+
+/* ヒーロー上のタグは地色と同化するので白＋影にする */
+.hero .tag {
+  background: var(--color-bg-card);
+  box-shadow: 0 6px 18px rgba(119, 91, 78, 0.07);
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+/* 背景の丸はテキストの読みやすさを優先して控えめに */
+.hero-deco { opacity: 0.3; }
+.hero-deco.deco-2 { top: 40px; right: -110px; }
+
+.scroll-label {
+  margin: 2.4em 0 0.8em;
+  color: var(--color-text-soft);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+}
+
+/* スマホでは見出しが1文字だけ折り返しやすいので少し小さく */
+@media (max-width: 620px) {
+  .heading-center h2 { font-size: 23px; }
+}
+
+/* 比較表はスマホでも3列すべて収める（横スクロールさせない） */
+@media (max-width: 620px) {
+  .compare-table {
+    min-width: 0;
+    font-size: 12px;
+    table-layout: fixed;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: 12px 5px;
+    line-height: 1.6;
+  }
+
+  .compare-table tbody th { width: 38%; }
+  .compare-table .dot { font-size: 14px; }
+}
+
+/* ---------- ページ最後の濃いブラウンのCTA ---------- */
+
+.cta-dark {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-footer-bg);
+  color: var(--color-footer-text);
+  text-align: center;
+}
+
+/* 背景に沈む大きな円 */
+.cta-dark::before,
+.cta-dark::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.045);
+  pointer-events: none;
+}
+
+.cta-dark::before {
+  width: 340px;
+  height: 340px;
+  top: -110px;
+  left: -120px;
+}
+
+.cta-dark::after {
+  width: 400px;
+  height: 400px;
+  bottom: -170px;
+  right: -140px;
+}
+
+.cta-dark .section-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+}
+
+.cta-dark h2 {
+  margin: 0 0 1.1em;
+  font-size: clamp(23px, 3.4vw, 42px);
+  line-height: 1.65;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.cta-dark p {
+  color: rgba(243, 236, 226, 0.88);
+  font-size: clamp(14px, 1.7vw, 16px);
+  line-height: 2.05;
+}
+
+.cta-dark .btn-light {
+  display: block;
+  width: min(100%, 460px);
+  margin: 2em auto 1.4em;
+  background: #fff;
+  color: var(--color-footer-bg);
+  font-family: var(--font-heading);
+  font-size: 17px;
+}
+
+.cta-dark .note {
+  margin: 0;
+  font-size: clamp(13px, 1.6vw, 15px);
+}
+
+/* ---------- 保証制度の条件 ---------- */
+
+.warranty {
+  max-width: 860px;
+  margin: 22px auto 0;
+  padding: 26px 24px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  line-height: 2;
+  color: var(--color-text-soft);
+}
+
+.warranty h4 {
+  margin: 0 0 12px;
+  color: var(--color-text);
+  font-size: 16px;
+}
+
+.warranty ul {
+  margin: 10px 0 0;
+  display: grid;
+  gap: 7px;
+}
+
+.warranty li::before {
+  content: "・";
+  color: var(--color-primary-dark);
 }
