@@ -3187,3 +3187,36 @@ p,
   font-size: 13px;
   line-height: 1.8;
 }
+
+/* プロフィールの差し込み写真 */
+.profile-snap {
+  margin: 28px 0 0;
+}
+
+.profile-snap img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.profile-snap figcaption {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--color-text-soft);
+  font-size: 13px;
+}
+
+/* img の width/height 属性は CSS の height としても効いてしまい、
+   aspect-ratio での切り抜きを打ち消す。height:auto で明示的に無効化する */
+.hero-photo,
+.profile-round,
+.profile-snap img,
+.gallery-grid img,
+.menu-image img,
+.care-figure img,
+.care-photos img,
+.month-list img,
+.workshop-grid img {
+  height: auto;
+}
