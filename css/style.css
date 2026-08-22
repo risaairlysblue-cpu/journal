@@ -1223,12 +1223,6 @@ section {
   text-align: center;
 }
 
-/* フッター中央のロゴ */
-.footer-logo {
-  width: 96px;
-  margin: 0 auto 22px;
-}
-
 .footer-links {
   display: flex;
   flex-wrap: wrap;
@@ -2171,6 +2165,7 @@ section {
   max-width: 860px;
   margin: 0 auto;
   padding: 32px 24px;
+  background: var(--color-bg-card);
   border: 2px dashed var(--color-primary);
   border-radius: var(--radius-lg);
 }
@@ -2182,21 +2177,31 @@ section {
 }
 
 .bonus-item {
-  padding: 18px 22px;
-  margin-bottom: 12px;
+  padding: 20px 22px;
+  margin-bottom: 14px;
   background: #fbf1ee;
+  border: 1px solid #eddcd6;
   border-radius: var(--radius-md);
-  font-size: 16px;
 }
 
 .bonus-item:last-child { margin-bottom: 0; }
 
-.bonus-item small {
-  display: block;
-  margin-top: 4px;
+.bonus-item .ttl {
+  margin: 0 0 8px;
+  font-family: var(--font-heading);
+  font-size: 17px;
+}
+
+.bonus-item p {
+  margin: 0;
   color: var(--color-text-soft);
-  font-size: 13px;
-  line-height: 1.8;
+  font-size: 14px;
+  line-height: 1.95;
+}
+
+.bonus-item .note {
+  margin-top: 8px;
+  font-size: 12.5px;
 }
 
 /* ---------- 料金カード（ヘッダー付き） ---------- */
@@ -2778,4 +2783,131 @@ body { padding-bottom: 62px; }
   .feature-2col .ico { width: 52px; height: 52px; font-size: 23px; margin-bottom: 13px; }
   .feature-2col h3 { font-size: 15px; margin-bottom: 10px; }
   .feature-2col p { font-size: 13px; line-height: 1.85; }
+}
+
+/* ---------- 保証制度：条件の説明リスト ---------- */
+
+.warranty .lbl {
+  margin: 22px 0 10px;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 15px;
+}
+
+.cond-list {
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.cond-list dt {
+  margin-bottom: 3px;
+  color: var(--color-primary-dark);
+  font-weight: 600;
+  font-size: 14.5px;
+}
+
+.cond-list dt::before {
+  content: "✓";
+  margin-right: 8px;
+}
+
+.cond-list dd {
+  margin: 0 0 0 22px;
+  font-size: 14px;
+  line-height: 1.95;
+}
+
+.warranty .note {
+  margin: 22px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 12.5px;
+  line-height: 1.95;
+}
+
+/* ---------- 1か月のサポート内容 ---------- */
+
+.month-list {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 760px) {
+  .month-list { grid-template-columns: 1fr 1fr; }
+}
+
+.month-list .item {
+  padding: 24px 24px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.month-list .ttl {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 17px;
+}
+
+.month-list .cnt {
+  display: inline-block;
+  margin: 8px 0 12px;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-pink-tag);
+  color: var(--color-pink-tag-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.month-list .item p:last-child {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 1.95;
+}
+
+/* ==========================================================================
+   日本語の折り返しを整える
+   （「〜大丈夫／です」のように1〜2文字だけ次の行に落ちるのを防ぐ）
+   ========================================================================== */
+
+h1, h2, h3, h4,
+.hero h1,
+.heading-center h2,
+.section-title,
+.plan-card h3,
+.feature-2col h3,
+.month-list .ttl,
+.bonus-item .ttl,
+.faq-item summary,
+.cta-dark h2,
+.callout-box h2,
+.worry-note strong {
+  /* 文節で折り返す（対応ブラウザのみ。非対応でも表示は崩れない） */
+  word-break: auto-phrase;
+  /* 行の長さをそろえて、最後の行に1文字だけ残らないようにする */
+  text-wrap: balance;
+}
+
+p,
+.worry-item,
+.recommend-item,
+.page-lead,
+.story-block p,
+.faq-item .answer,
+.cond-list dd {
+  word-break: auto-phrase;
+  text-wrap: pretty;
+}
+
+@media (max-width: 620px) {
+  .month-list .item { padding: 20px 18px; }
+  .warranty { padding: 22px 18px; }
+  .bonus-item { padding: 17px 16px; }
+  .bonus-item .ttl { font-size: 15.5px; }
 }
