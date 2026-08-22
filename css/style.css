@@ -2900,7 +2900,10 @@ p,
 .page-lead,
 .story-block p,
 .faq-item .answer,
-.cond-list dd {
+.cond-list dd,
+.workshop-item,
+.icon-row p,
+.care-card .points li {
   word-break: auto-phrase;
   text-wrap: pretty;
 }
@@ -2910,4 +2913,210 @@ p,
   .warranty { padding: 22px 18px; }
   .bonus-item { padding: 17px 16px; }
   .bonus-item .ttl { font-size: 15.5px; }
+}
+
+/* ==========================================================================
+   ママのセルフケアページ
+   ========================================================================== */
+
+.selfcare-hero {
+  text-align: center;
+  background:
+    radial-gradient(circle at 10% 14%, rgba(201, 150, 138, 0.14), transparent 20%),
+    radial-gradient(circle at 90% 12%, rgba(168, 184, 154, 0.14), transparent 20%),
+    #fdf7f5;
+}
+
+.selfcare-hero .sub {
+  margin: 0 0 6px;
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2.2vw, 22px);
+  letter-spacing: 0.08em;
+}
+
+.selfcare-hero h1 {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 4.4vw, 46px);
+  color: var(--color-primary-dark);
+  letter-spacing: 0.06em;
+}
+
+/* 見出し下の小さな飾り */
+.deco-heart {
+  display: block;
+  width: 60px;
+  height: 12px;
+  margin: 0 auto 26px;
+  color: var(--color-primary);
+}
+
+/* ---------- できること：アイコン4つ ---------- */
+
+.icon-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px 14px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+@media (min-width: 700px) {
+  .icon-row { grid-template-columns: repeat(4, 1fr); }
+}
+
+.icon-row .item { text-align: center; }
+
+.icon-row .circle {
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f7e9e5;
+  color: var(--color-primary-dark);
+}
+
+.icon-row .circle svg { width: 36px; height: 36px; }
+
+.icon-row p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* ---------- Lesson / workshop のカード ---------- */
+
+.care-card {
+  max-width: 860px;
+  margin: 0 auto 30px;
+  padding: 30px 24px;
+  background: var(--color-bg-card);
+  border: 1px solid #f0dfd9;
+  border-radius: var(--radius-lg);
+}
+
+.care-card:last-child { margin-bottom: 0; }
+
+.care-card .head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.care-card .badge-round {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f7e9e5;
+  color: var(--color-primary-dark);
+}
+
+.care-card .badge-round.sage { background: #e7ede2; color: var(--color-sage-text); }
+.care-card .badge-round svg { width: 34px; height: 34px; }
+
+.care-card .en {
+  margin: 0 0 2px;
+  color: var(--color-primary-dark);
+  font-size: 15px;
+  font-style: italic;
+  letter-spacing: 0.06em;
+}
+
+.care-card h3 {
+  margin: 0;
+  font-size: clamp(19px, 2.5vw, 26px);
+}
+
+.care-card .rule {
+  height: 1px;
+  margin: 0 0 20px;
+  background: var(--color-border);
+}
+
+.care-card > p {
+  margin: 0 0 18px;
+  font-size: 15px;
+  line-height: 2;
+}
+
+.care-card .points {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.care-card .points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.care-card .points li::before {
+  content: "✓";
+  flex: none;
+  width: 26px;
+  height: 26px;
+  margin-top: 2px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f2ddd7;
+  color: var(--color-primary-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* 写真の並び */
+.care-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.care-photos img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+/* ---------- 締めのメッセージ ---------- */
+
+.care-message {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 26px;
+  background: #f7e9e5;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  line-height: 2.1;
+}
+
+.care-message p { margin: 0; }
+
+.care-closing {
+  margin: 44px auto 0;
+  max-width: 860px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2.1vw, 21px);
+  line-height: 2.1;
+}
+
+@media (max-width: 620px) {
+  .care-card { padding: 24px 18px; }
+  .care-card .head { gap: 14px; }
+  .care-card .badge-round { width: 60px; height: 60px; }
+  .care-card .badge-round svg { width: 28px; height: 28px; }
+  .icon-row .circle { width: 64px; height: 64px; }
+  .icon-row .circle svg { width: 31px; height: 31px; }
+  .care-message { padding: 26px 20px; }
 }
