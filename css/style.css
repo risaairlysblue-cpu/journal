@@ -194,29 +194,26 @@ section {
 }
 
 .nav-bar {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 24px;
+  justify-content: center;
   width: min(var(--max-width-wide), calc(100% - 40px));
-  height: 88px;
   margin: 0 auto;
-  padding: 0;
+  padding: 12px 0;
 }
 
 .logo {
-  font-family: var(--font-heading);
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--color-text);
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: block;
   flex: none;
+  /* ハンバーガーに重ならない幅に収める */
+  max-width: calc(100% - 120px);
 }
 
 .logo img {
-  width: 64px;
-  height: 64px;
+  /* 幅で決める。ヘッダーの中で大きく見せるため */
+  width: clamp(190px, 54vw, 330px);
+  height: auto;
   object-fit: contain;
 }
 
@@ -233,7 +230,10 @@ section {
 }
 
 .nav-toggle {
-  margin-left: auto;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: 0;
   width: 44px;
@@ -320,7 +320,17 @@ section {
     padding: 0;
     overflow: visible;
     width: auto;
-    margin-left: auto;
+    margin: 0;
+  }
+
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    width: min(var(--max-width-wide), calc(100% - 40px));
+    margin: 0 auto;
+    padding-bottom: 14px;
   }
 
   .nav-menu > ul {
@@ -1314,16 +1324,6 @@ section {
 
   .nav-bar {
     width: min(100% - 28px, var(--max-width-wide));
-    height: 74px;
-  }
-
-  .logo img {
-    width: 52px;
-    height: 52px;
-  }
-
-  .logo {
-    font-size: 15px;
   }
 
   .nav-menu {
@@ -2496,7 +2496,6 @@ body { padding-bottom: 62px; }
   .step-row .item { gap: 15px; padding: 18px 18px; }
   .step-row .num { width: 44px; height: 44px; font-size: 14px; }
   .step-row h3 { font-size: 17px; }
-  .feature-2col { grid-template-columns: 1fr; }
   .bonus-box { padding: 26px 18px; }
   .plan-box .body { padding: 28px 18px; }
   .spec-table th, .spec-table td { padding: 13px 8px; font-size: 14px; }
@@ -2755,4 +2754,28 @@ body { padding-bottom: 62px; }
 .warranty li::before {
   content: "・";
   color: var(--color-primary-dark);
+}
+
+/* ヒーローの3つのタグは1列に収める */
+.hero .tag-row {
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hero .tag {
+  white-space: nowrap;
+  padding: 9px clamp(9px, 2.6vw, 20px);
+  font-size: clamp(11px, 3.1vw, 14px);
+}
+
+/* 特徴カードはスマホでも2列×3行（Wixと同じ並び） */
+.feature-2col { grid-template-columns: 1fr 1fr; }
+
+@media (max-width: 620px) {
+  .feature-2col { gap: 13px; }
+  .feature-2col .item { padding: 24px 14px; }
+  .feature-2col .ico { width: 52px; height: 52px; font-size: 23px; margin-bottom: 13px; }
+  .feature-2col h3 { font-size: 15px; margin-bottom: 10px; }
+  .feature-2col p { font-size: 13px; line-height: 1.85; }
 }
