@@ -3074,12 +3074,25 @@ p,
 }
 
 /* 写真の並び */
+/* 写真枠。画像が無いときは自動で消える（onerror で img を外す） */
+.care-figure { margin: 0 0 18px; }
+.care-figure:empty { display: none; }
+
+.care-figure img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
 .care-photos {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin-top: 20px;
 }
+
+.care-photos:empty { display: none; }
 
 .care-photos img {
   width: 100%;
