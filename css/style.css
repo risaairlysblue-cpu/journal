@@ -2903,7 +2903,9 @@ p,
 .cond-list dd,
 .workshop-item,
 .icon-row p,
-.care-card .points li {
+.care-card .points li,
+.link-list .ttl,
+.link-list .sub {
   word-break: auto-phrase;
   text-wrap: pretty;
 }
@@ -3132,4 +3134,56 @@ p,
   .icon-row .circle { width: 64px; height: 64px; }
   .icon-row .circle svg { width: 31px; height: 31px; }
   .care-message { padding: 26px 20px; }
+}
+
+/* ---------- ぬくもりページ ---------- */
+
+.nukumori-logo { margin: 0 0 24px; }
+.nukumori-logo:empty { display: none; }
+
+.nukumori-logo img {
+  width: min(150px, 40vw);
+  height: auto;
+  margin: 0 auto;
+}
+
+/* 関連リンクの一覧 */
+.link-list {
+  display: grid;
+  gap: 14px;
+}
+
+.link-list .item {
+  display: block;
+  padding: 22px 26px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.link-list .item:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
+}
+
+.link-list .ttl {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.link-list .ttl::after {
+  content: " ↗";
+  font-size: 13px;
+}
+
+.link-list .sub {
+  display: block;
+  color: var(--color-text-soft);
+  font-size: 13px;
+  line-height: 1.8;
 }
