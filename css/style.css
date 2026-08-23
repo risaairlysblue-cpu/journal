@@ -3382,7 +3382,12 @@ p,
   .nav-submenu .nav-tail { display: none; }
 }
 
-/* 画面がとくに狭い端末では、注記だけ少し小さくして1行に収める */
-@media (max-width: 359px) {
+/* 画面がとくに狭い端末では、注記の文字と枠の余白を詰めて1行に収める */
+@media (max-width: 420px) {
   .note-list { font-size: 11.5px; }
+}
+
+@media (max-width: 359px) {
+  .callout-box { padding: 40px 16px; }
+  .callout-box.notice { padding: 32px 16px; }
 }
