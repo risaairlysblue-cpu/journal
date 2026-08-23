@@ -2829,12 +2829,25 @@ body { padding-bottom: 62px; }
   line-height: 1.95;
 }
 
-.warranty .note {
+/* ※の注記。1項目ずつ1行に収まる長さにしてある */
+.note-list {
   margin: 22px 0 0;
   padding-top: 16px;
   border-top: 1px solid var(--color-border);
+  display: grid;
+  gap: 6px;
   font-size: 12.5px;
-  line-height: 1.95;
+  line-height: 1.9;
+}
+
+.note-list li {
+  display: flex;
+  gap: 6px;
+}
+
+.note-list li::before {
+  content: "※";
+  flex: none;
 }
 
 /* ---------- 1か月のサポート内容 ---------- */
@@ -2923,7 +2936,7 @@ p,
 
 @media (max-width: 620px) {
   .month-list .item { padding: 20px 18px; }
-  .warranty { padding: 22px 18px; }
+  .warranty { padding: 22px 14px; }
   .bonus-item { padding: 17px 16px; }
   .bonus-item .ttl { font-size: 15.5px; }
 }
@@ -3367,4 +3380,9 @@ p,
    （PCのドロップダウンでは正式名称のまま表示する） */
 @media (max-width: 959px) {
   .nav-submenu .nav-tail { display: none; }
+}
+
+/* 画面がとくに狭い端末では、注記だけ少し小さくして1行に収める */
+@media (max-width: 359px) {
+  .note-list { font-size: 11.5px; }
 }
