@@ -3391,3 +3391,17 @@ p,
   .callout-box { padding: 40px 16px; }
   .callout-box.notice { padding: 32px 16px; }
 }
+
+/* セクションの途中に入れる横長の写真 */
+.section-photo {
+  max-width: 860px;
+  margin: 0 auto 34px;
+}
+
+.section-photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
