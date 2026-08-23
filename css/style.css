@@ -188,6 +188,17 @@ section {
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+/* 背景のぼかしはヘッダー本体ではなく疑似要素に持たせる。
+   backdrop-filter を付けた要素は、その中の position:fixed の
+   基準になってしまい、開いたメニューがヘッダーの高さに
+   閉じ込められるため */
+#site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: rgba(255, 253, 249, 0.94);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(201, 150, 138, 0.18);
@@ -3219,4 +3230,141 @@ p,
 .month-list img,
 .workshop-grid img {
   height: auto;
+}
+
+/* ---------- トップページ：ぬくもりの案内 ---------- */
+
+.nukumori-teaser {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 34px 26px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: center;
+  text-align: center;
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+}
+
+@media (min-width: 780px) {
+  .nukumori-teaser {
+    grid-template-columns: 200px 1fr;
+    gap: 44px;
+    padding: 44px 46px;
+    text-align: left;
+  }
+}
+
+.nukumori-teaser .logo-side img {
+  width: min(140px, 42vw);
+  height: auto;
+  margin: 0 auto;
+}
+
+@media (min-width: 780px) {
+  .nukumori-teaser .logo-side img { width: 100%; max-width: 200px; }
+}
+
+.nukumori-teaser h2 {
+  margin: 0 0 16px;
+  font-size: clamp(21px, 2.6vw, 30px);
+}
+
+.nukumori-teaser p {
+  margin: 0 0 14px;
+  color: var(--color-text-soft);
+  font-size: 15px;
+  line-height: 2;
+}
+
+.nukumori-teaser p strong { color: var(--color-text); }
+
+.nukumori-teaser .btn { margin-top: 8px; }
+
+/* ==========================================================================
+   スマホのメニューを横並び（2列）にする
+   縦一列だと7項目＋サブメニューで下まで届かないため
+   ========================================================================== */
+
+@media (max-width: 959px) {
+  .nav-menu {
+    padding: 84px 20px 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-menu > ul {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    font-size: 15px;
+  }
+
+  /* 押せる範囲をボタン状に広げる */
+  .nav-menu > ul > li > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+    padding: 12px 10px;
+    text-align: center;
+    line-height: 1.5;
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+  }
+
+  /* レッスンメニューは横幅いっぱいに置き、先頭に表示する */
+  .nav-item-dropdown {
+    order: -1;
+    grid-column: 1 / -1;
+  }
+
+  .nav-item-dropdown > a {
+    background: var(--color-primary) !important;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 16px;
+  }
+
+  /* サブメニューは3つを横に並べる */
+  .nav-submenu {
+    margin-top: 10px;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    font-size: 12px;
+    color: var(--color-text);
+  }
+
+  .nav-submenu a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 10px 6px;
+    text-align: center;
+    line-height: 1.55;
+    letter-spacing: 0;
+    white-space: nowrap;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  /* メニュー内にも無料相談ボタンを出す */
+  .nav-row .nav-cta { display: none; }
+}
+
+@media (max-width: 380px) {
+  .nav-submenu { grid-template-columns: 1fr; }
+  .nav-submenu a { min-height: 44px; }
+}
+
+/* サブメニューのラベルは、スマホでは前半だけにして1行に収める
+   （PCのドロップダウンでは正式名称のまま表示する） */
+@media (max-width: 959px) {
+  .nav-submenu .nav-tail { display: none; }
 }
