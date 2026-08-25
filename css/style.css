@@ -3405,3 +3405,35 @@ p,
   object-fit: cover;
   border-radius: var(--radius-lg);
 }
+
+/* レッスン一覧の「おすすめ」バッジ */
+.menu-badge {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 7px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+/* 比較カードの「おすすめ」側 */
+.mini-compare.is-recommended {
+  border-color: var(--color-primary);
+  background: #fdf7f5;
+}
+
+.tag-recommend {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 5px 15px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 13px;
+}
+
+.mini-compare p + p { margin-top: 10px; }
