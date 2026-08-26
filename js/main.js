@@ -86,6 +86,22 @@ function setStatus(el, text, color) {
 const DOW = ["日", "月", "火", "水", "木", "金", "土"];
 const EVENTS_URL = "data/events.json";
 
+// イベントの種別。listed:false のものは「今後のイベント」に出さず、
+// カレンダー上の印と詳細だけで案内する
+const EVENT_KINDS = {
+  nukumori: { short: "ぬくもり", label: "ぬくもり発達相談会", listed: true },
+  group:    { short: "グループ", label: "グループレッスン",   listed: true },
+  private:  { short: "個別",     label: "個別レッスン",       listed: false },
+};
+
+function kindOf(ev) {
+  return EVENT_KINDS[ev.kind] ? ev.kind : "nukumori";
+}
+
+function yen(n) {
+  return `¥${n.toLocaleString()}`;
+}
+
 function pad2(n) {
   return String(n).padStart(2, "0");
 }
@@ -129,13 +145,34 @@ function renderMonthGrid(gridEl, labelEl, year, month, eventsByDate, today, onDa
     const key = formatDateKey(year, month, d);
     const el = document.createElement("div");
     el.className = "day";
-    el.textContent = d;
+    el.dataset.date = key;
+    const num = document.createElement("span");
+    num.className = "day-num";
+    num.textContent = d;
+    el.appendChild(num);
 
     if (key === today) el.classList.add("today");
-    if (eventsByDate[key]) {
+
+    const dayEvents = eventsByDate[key];
+    if (dayEvents) {
       el.classList.add("has-event");
-      el.title = eventsByDate[key].map((e) => e.title).join(" / ");
+      el.title = dayEvents.map((e) => e.title).join(" / ");
+      // 種別ごとの印。同じ種別が重なっても印は1つにまとめる
+      const marks = [...new Set(dayEvents.map(kindOf))];
+      const dots = document.createElement("span");
+      dots.className = "day-marks";
+      marks.forEach((k) => {
+        const dot = document.createElement("i");
+        dot.className = `mark mark-${k}`;
+        dots.appendChild(dot);
+      });
+      el.appendChild(dots);
+      el.setAttribute("role", "button");
+      el.setAttribute("tabindex", "0");
       el.addEventListener("click", () => onDayClick && onDayClick(key));
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onDayClick && onDayClick(key); }
+      });
     }
     gridEl.appendChild(el);
   }
@@ -228,6 +265,45 @@ async function initEventForm() {
     '<option value="日程は相談したい">この中に都合の合う日がない／相談したい</option>');
 }
 
+// ---------- 選んだ日の詳細 ----------
+
+function renderDayDetail(el, dateKey, dayEvents) {
+  if (!el) return;
+
+  if (!dayEvents || !dayEvents.length) {
+    el.innerHTML = '<p class="detail-hint">印のついた日をタップすると、その日の予定が表示されます。</p>';
+    return;
+  }
+
+  const [y, m, d] = dateKey.split("-").map(Number);
+  const wd = "日月火水木金土"[new Date(y, m - 1, d).getDay()];
+
+  const items = dayEvents.map((ev) => {
+    const k = kindOf(ev);
+    const rows = [];
+    if (ev.time) rows.push(ev.time);
+    if (ev.place) rows.push(ev.place);
+    if (ev.price != null) rows.push(`${yen(ev.price)}（税込）`);
+    if (ev.note) rows.push(ev.note);
+
+    const href = ev.applyUrl || ev.lineUrl;
+    const isExternal = href && /^https?:/.test(href);
+    const full = ev.remaining != null && ev.remaining <= 0;
+    const link = !full && href
+      ? `<a href="${href}"${isExternal ? ' target="_blank" rel="noopener"' : ""} class="link-arrow">${ev.applyLabel || "詳しく見る →"}</a>`
+      : (full ? '<span class="detail-full">満席</span>' : "");
+
+    return `
+      <div class="detail-item">
+        <p class="detail-kind"><i class="mark mark-${k}"></i>${EVENT_KINDS[k].label}</p>
+        ${rows.map((r) => `<p class="detail-row">${r}</p>`).join("")}
+        ${link}
+      </div>`;
+  });
+
+  el.innerHTML = `<p class="detail-date">${m}月${d}日（${wd}）</p>${items.join("")}`;
+}
+
 async function initCalendarPage() {
   const root = document.querySelector("[data-calendar]");
   if (!root) return;
@@ -250,11 +326,23 @@ async function initCalendarPage() {
   let viewYear = now.getFullYear();
   let viewMonth = now.getMonth();
 
+  const detailEl = document.querySelector(root.getAttribute("data-detail-target") || "");
+
+  function selectDay(dateKey) {
+    if (detailEl) {
+      renderDayDetail(detailEl, dateKey, eventsByDate[dateKey]);
+      gridEl.querySelectorAll(".day.is-selected").forEach((n) => n.classList.remove("is-selected"));
+      const cell = [...gridEl.querySelectorAll(".day")].find((n) => n.dataset.date === dateKey);
+      if (cell) cell.classList.add("is-selected");
+      return;
+    }
+    // 詳細パネルがないページでは、一覧の該当カードへ移動する
+    const target = document.getElementById(`event-${dateKey}`);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
   function draw() {
-    renderMonthGrid(gridEl, labelEl, viewYear, viewMonth, eventsByDate, todayKey, (dateKey) => {
-      const target = document.getElementById(`event-${dateKey}`);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
+    renderMonthGrid(gridEl, labelEl, viewYear, viewMonth, eventsByDate, todayKey, selectDay);
   }
 
   if (prevBtn) {
@@ -274,8 +362,22 @@ async function initCalendarPage() {
 
   draw();
 
+  if (detailEl) {
+    const next = events.find((ev) => ev.date >= todayKey);
+    if (next) {
+      // 直近の予定がある月を開いておく
+      const [ny, nm] = next.date.split("-").map(Number);
+      if (ny !== viewYear || nm - 1 !== viewMonth) {
+        viewYear = ny; viewMonth = nm - 1; draw();
+      }
+      selectDay(next.date);
+    } else {
+      renderDayDetail(detailEl, null, null);
+    }
+  }
+
   if (listEl) {
-    const upcoming = events.filter((ev) => ev.date >= todayKey);
+    const upcoming = events.filter((ev) => ev.date >= todayKey && EVENT_KINDS[kindOf(ev)].listed);
     const list = mode === "compact" ? upcoming.slice(0, 2) : upcoming;
     renderEventList(listEl, list);
     list.forEach((ev, i) => {

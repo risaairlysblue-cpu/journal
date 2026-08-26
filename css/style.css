@@ -3452,3 +3452,138 @@ p,
   opacity: 0.6;
   cursor: default;
 }
+
+/* ==========================================================================
+   カレンダー：種別の印・凡例・その日の詳細
+   ========================================================================== */
+
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .calendar-layout { grid-template-columns: 1.15fr 0.85fr; gap: 28px; }
+}
+
+/* 日付のマス（数字＋印） */
+.calendar-grid .day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 46px;
+}
+
+.day-num { line-height: 1.2; }
+
+.day-marks {
+  display: flex;
+  gap: 3px;
+  min-height: 7px;
+}
+
+/* 種別の印 */
+.mark {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex: none;
+}
+
+.mark-private  { background: var(--color-primary); }
+.mark-group    { background: var(--color-sage); }
+.mark-nukumori { background: #b9a3cf; }
+
+/* 選択中の日 */
+.calendar-grid .day.is-selected {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+  border-radius: 10px;
+}
+
+.calendar-grid .day.has-event { cursor: pointer; }
+
+/* 凡例 */
+.calendar-legend {
+  display: grid;
+  gap: 9px;
+  margin: 18px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 13px;
+}
+
+.calendar-legend li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.calendar-legend .mark { width: 9px; height: 9px; }
+
+.calendar-legend span {
+  margin-left: auto;
+  color: var(--color-text-soft);
+  font-size: 12px;
+}
+
+/* その日の詳細 */
+.day-detail {
+  padding: 24px 22px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.detail-hint {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.detail-date {
+  margin: 0 0 16px;
+  font-family: var(--font-heading);
+  font-size: 19px;
+}
+
+.detail-item {
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+}
+
+.detail-item:last-child { margin-bottom: 0; }
+
+.detail-kind {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-family: var(--font-heading);
+  font-size: 16px;
+}
+
+.detail-row {
+  margin: 0 0 4px;
+  color: var(--color-text-soft);
+  font-size: 13.5px;
+  line-height: 1.85;
+}
+
+.detail-item .link-arrow { margin-top: 10px; }
+
+.detail-full {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--color-text-soft);
+  font-size: 13px;
+  font-weight: 600;
+}
