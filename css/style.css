@@ -882,6 +882,7 @@ section {
 
 .form-field input[type="text"],
 .form-field input[type="email"],
+.form-field input[type="tel"],
 .form-field select,
 .form-field textarea {
   width: 100%;
@@ -3437,3 +3438,17 @@ p,
 }
 
 .mini-compare p + p { margin-top: 10px; }
+
+/* フォームの補足テキスト */
+.field-note {
+  margin: 8px 0 0;
+  color: var(--color-text-soft);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* 送信中はボタンを押せなくする */
+.ajax-form button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}

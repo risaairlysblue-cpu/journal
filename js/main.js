@@ -35,43 +35,50 @@ function initNav() {
 
 // ---------- contact form ----------
 
-function initContactForm() {
-  const form = document.getElementById("contact-form");
-  if (!form) return;
+function initForms() {
+  // ページ内のすべての ajax フォームに同じ送信処理をつける
+  document.querySelectorAll("form.ajax-form").forEach((form) => {
+    const status = form.querySelector(".form-status");
+    const button = form.querySelector('button[type="submit"]');
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const status = document.getElementById("cf-status");
-    const data = new FormData(form);
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
 
-    if (form.action.includes("YOUR_FORM_ID")) {
-      status.textContent = "フォーム送信先が未設定です（README を確認してください）";
-      status.style.color = "#a35a5a";
-      return;
-    }
-
-    status.textContent = "送信中...";
-    status.style.color = "";
-
-    try {
-      const res = await fetch(form.action, {
-        method: "POST",
-        body: data,
-        headers: { Accept: "application/json" },
-      });
-      if (res.ok) {
-        status.textContent = "送信しました。ご連絡ありがとうございます、LINEまたはメールでご返信します。";
-        status.style.color = "#4f5a3e";
-        form.reset();
-      } else {
-        status.textContent = "送信に失敗しました。時間をおいて再度お試しください。";
-        status.style.color = "#a35a5a";
+      if (form.action.includes("YOUR_FORM_ID")) {
+        setStatus(status, "フォーム送信先が未設定です（README を確認してください）", "#a35a5a");
+        return;
       }
-    } catch (err) {
-      status.textContent = "送信に失敗しました。通信環境をご確認ください。";
-      status.style.color = "#a35a5a";
-    }
+
+      setStatus(status, "送信中...", "");
+      if (button) button.disabled = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: { Accept: "application/json" },
+        });
+        if (res.ok) {
+          setStatus(status, form.dataset.doneText
+            || "送信しました。ご連絡ありがとうございます、LINEまたはメールでご返信します。", "#4f5a3e");
+          form.reset();
+        } else {
+          setStatus(status, "送信に失敗しました。時間をおいて再度お試しください。", "#a35a5a");
+        }
+      } catch (err) {
+        setStatus(status, "送信に失敗しました。通信環境をご確認ください。", "#a35a5a");
+      } finally {
+        if (button) button.disabled = false;
+      }
+    });
   });
+}
+
+function setStatus(el, text, color) {
+  if (!el) return;
+  el.textContent = text;
+  el.style.color = color;
 }
 
 // ---------- calendar ----------
@@ -156,8 +163,12 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
     const full = hasSlots && ev.remaining <= 0;
     const card = document.createElement("div");
     card.className = "event-card" + (full ? " full" : "");
-    const applyLink = !full && ev.lineUrl
-      ? `<a href="${ev.lineUrl}" target="_blank" rel="noopener" class="link-arrow">LINEで申し込む →</a>`
+    // applyUrl（サイト内の申し込みフォーム）があればそちらを優先する
+    const href = ev.applyUrl || ev.lineUrl;
+    const isExternal = href && /^https?:/.test(href);
+    const label = ev.applyLabel || (ev.applyUrl ? "申し込む →" : "LINEで申し込む →");
+    const applyLink = !full && href
+      ? `<a href="${href}"${isExternal ? ' target="_blank" rel="noopener"' : ""} class="link-arrow">${label}</a>`
       : "";
 
     // 時間・場所・料金のうち、入力されているものだけを並べる
@@ -177,6 +188,44 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
     `;
     listEl.appendChild(card);
   });
+}
+
+// ---------- イベント申し込みフォームの日程欄 ----------
+
+async function initEventForm() {
+  const select = document.getElementById("ef-date");
+  if (!select) return;
+
+  const keyword = select.dataset.filter || "";
+  const events = await loadEvents();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcoming = events.filter((ev) => {
+    if (keyword && !ev.title.includes(keyword)) return false;
+    if (new Date(ev.date) < today) return false;
+    return !(ev.remaining != null && ev.remaining <= 0);
+  });
+
+  select.innerHTML = "";
+
+  if (!upcoming.length) {
+    select.insertAdjacentHTML("beforeend",
+      '<option value="次回の日程が決まり次第の連絡希望">次回の日程が決まり次第、連絡がほしい</option>');
+    const note = document.getElementById("ef-empty");
+    if (note) note.hidden = false;
+    return;
+  }
+
+  select.insertAdjacentHTML("beforeend", '<option value="">選択してください</option>');
+  upcoming.forEach((ev) => {
+    const { m, d } = eventDateLabel(ev.date);
+    const wd = "日月火水木金土"[new Date(ev.date).getDay()];
+    const label = `${m}${d}日（${wd}） ${ev.time || ""}　${ev.place || ""}`.trim();
+    select.insertAdjacentHTML("beforeend", `<option value="${label}">${label}</option>`);
+  });
+  select.insertAdjacentHTML("beforeend",
+    '<option value="日程は相談したい">この中に都合の合う日がない／相談したい</option>');
 }
 
 async function initCalendarPage() {
@@ -241,6 +290,7 @@ async function initCalendarPage() {
 document.addEventListener("DOMContentLoaded", async () => {
   await includePartials();
   initNav();
-  initContactForm();
+  initForms();
   initCalendarPage();
+  initEventForm();
 });
