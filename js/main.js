@@ -151,7 +151,9 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
 
   events.forEach((ev) => {
     const { m, d } = eventDateLabel(ev.date);
-    const full = ev.remaining <= 0;
+    // 定員が未入力のイベントもあるので、数値が入っているときだけ満席判定する
+    const hasSlots = ev.remaining != null && ev.capacity != null;
+    const full = hasSlots && ev.remaining <= 0;
     const card = document.createElement("div");
     card.className = "event-card" + (full ? " full" : "");
     const applyLink = !full && ev.lineUrl
@@ -169,7 +171,7 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
       <div>
         <h4>${ev.title}</h4>
         ${meta.length ? `<p>${meta.join("　")}</p>` : ""}
-        <div class="slots">${full ? "満席" : `残り${ev.remaining}枠 / 定員${ev.capacity}名`}</div>
+        ${hasSlots ? `<div class="slots">${full ? "満席" : `残り${ev.remaining}枠 / 定員${ev.capacity}名`}</div>` : ""}
         ${applyLink}
       </div>
     `;
