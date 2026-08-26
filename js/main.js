@@ -35,6 +35,21 @@ function initNav() {
 
 // ---------- contact form ----------
 
+// フォームの内容をスプレッドシートにも記録する（Apps ScriptのウェブアプリURL）。
+// 空のあいだは記録をスキップするだけで、フォーム送信そのものには影響しない
+const SHEET_ENDPOINT = "";
+
+function logToSheet(form, data) {
+  if (!SHEET_ENDPOINT || !form.dataset.sheet) return;
+  const body = new FormData();
+  for (const [k, v] of data.entries()) body.append(k, v);
+  body.append("_sheet", form.dataset.sheet);
+  // 記録は補助なので、失敗してもフォーム送信は成功のままにする
+  fetch(SHEET_ENDPOINT, { method: "POST", mode: "no-cors", body }).catch((err) => {
+    console.warn("sheet log failed", err);
+  });
+}
+
 function initForms() {
   // ページ内のすべての ajax フォームに同じ送信処理をつける
   document.querySelectorAll("form.ajax-form").forEach((form) => {
@@ -60,6 +75,7 @@ function initForms() {
           headers: { Accept: "application/json" },
         });
         if (res.ok) {
+          logToSheet(form, data);
           setStatus(status, form.dataset.doneText
             || "送信しました。ご連絡ありがとうございます、LINEまたはメールでご返信します。", "#4f5a3e");
           form.reset();
