@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="images/logo-mark.png">
-<title>ご予約 | MamaLima Room</title>
+<title>レッスンお申し込み | MamaLima Room</title>
+<meta name="description" content="MamaLima Roomのレッスンお申し込みフォーム。3ヶ月継続サポート・マンツーマン単発レッスン・グループレッスンのお申し込みはこちらから。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
@@ -13,15 +14,162 @@
 <body>
 <div data-include="components/header.html"></div>
 
-<section>
-  <div class="wrap center">
-    <h1 class="section-title">ご予約</h1>
-    <div class="divider"></div>
-    <p class="section-sub">下のフォームからお気軽にご連絡ください。<br>ご希望のメニューや受講方法、お子さんの年齢をお聞かせいただけるとスムーズです。</p>
+<section class="page-hero center">
+  <div class="section-inner">
+    <p class="page-label">お申し込み</p>
+    <h1>レッスン<br>お申し込みフォーム</h1>
+    <p class="page-lead">成長・発達について、心配事や困りごとはありませんか？</p>
   </div>
 </section>
 
-<div data-include="components/contact-form.html"></div>
+<section>
+  <div class="section-inner narrow">
+    <div class="heading-center">
+      <p class="section-kicker">For You</p>
+      <h2>こんなママに<br>おすすめです</h2>
+    </div>
+
+    <div class="recommend-list">
+      <div class="recommend-item">わが子の発達が進まず、心身ともに疲れ切っている</div>
+      <div class="recommend-item">発達が進まないのは自分のせいかも、と責めてしまう毎日</div>
+      <div class="recommend-item">色々試したけれど、家でどうすればいいか分からない</div>
+      <div class="recommend-item">情報が多すぎて、我が子への関わりに迷う</div>
+      <div class="recommend-item">頑張っても、我が子に合う方法が見えない</div>
+      <div class="recommend-item">いつでも子育てを相談できる場所がほしい</div>
+    </div>
+
+    <p class="page-lead" style="margin-top:2.4em; text-align:center;">
+      MamaLima Roomでは3つのメニューをご用意しています。<br>
+      おうちで楽しく続けられる「わが子だけのサポートプラン」を、一緒に見つけていきましょう。
+    </p>
+
+    <ul class="plan-lines">
+      <li><span class="nm">3ヶ月継続サポート</span><span class="pr">30,000円／月</span></li>
+      <li><span class="nm">マンツーマン単発レッスン</span><span class="pr">12,000円／90分</span></li>
+      <li><span class="nm">グループレッスン</span><span class="pr">6,000円／90分</span></li>
+    </ul>
+
+    <p class="center" style="margin-top:1.4em;">
+      <a href="lessons/index.html" class="link-arrow">各メニューの詳細を見る →</a>
+    </p>
+  </div>
+</section>
+
+<section class="tone-soft" id="form">
+  <div class="section-inner narrow">
+    <div class="heading-center">
+      <p class="section-kicker">Application</p>
+      <h2>お申し込み</h2>
+      <p class="page-lead" style="margin-top:20px;">＊印は入力必須の項目です。</p>
+    </div>
+
+    <form class="card ajax-form" action="https://formspree.io/f/xrpzrbpb" method="POST"
+          data-done-text="たくさんご記入ありがとうございました！内容を確認して、折り返しご連絡します。レッスンでお会いできることを楽しみにしています。">
+      <div class="card-body">
+        <input type="hidden" name="_subject" value="【レッスン】お申し込み">
+
+        <div class="form-field">
+          <label for="ap-mama">ママのお名前（ふりがなも） ＊</label>
+          <input type="text" id="ap-mama" name="ママのお名前" placeholder="例：山田　花子（やまだ　はなこ）" required>
+        </div>
+
+        <div class="form-field">
+          <label for="ap-child">お子さんのお名前（ふりがなも） ＊</label>
+          <input type="text" id="ap-child" name="お子さんのお名前" placeholder="例：山田　太郎（やまだ　たろう）" required>
+        </div>
+
+        <div class="form-field">
+          <label for="ap-birth">お子さんの生年月日 ＊</label>
+          <input type="date" id="ap-birth" name="お子さんの生年月日" required>
+        </div>
+
+        <div class="form-field">
+          <label>ご希望のコース ＊</label>
+          <div class="radio-group">
+            <label><input type="radio" name="ご希望のコース" value="3ヶ月継続サポート" required> 3ヶ月継続サポート<small>※日程は申し込み後に調整</small></label>
+            <label><input type="radio" name="ご希望のコース" value="マンツーマン単発レッスン"> マンツーマン単発レッスン<small>※日程は申し込み後に調整</small></label>
+            <label><input type="radio" name="ご希望のコース" value="グループレッスン"> グループレッスン<small>※日程は申し込み後に調整</small></label>
+            <label><input type="radio" name="ご希望のコース" value="まだ迷っている・相談したい"> まだ迷っている・相談したい</label>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>現在のお悩みを教えてください（複数選択可）</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="現在のお悩み" value="首すわり・向き癖について"> 首すわり・向き癖について</label>
+            <label><input type="checkbox" name="現在のお悩み" value="反り返りについて"> 反り返りについて</label>
+            <label><input type="checkbox" name="現在のお悩み" value="寝返りについて"> 寝返りについて</label>
+            <label><input type="checkbox" name="現在のお悩み" value="ずりバイについて"> ずりバイについて</label>
+            <label><input type="checkbox" name="現在のお悩み" value="ハイハイについて"> ハイハイについて</label>
+            <label><input type="checkbox" name="現在のお悩み" value="おすわりについて"> おすわりについて</label>
+            <label><input type="checkbox" name="現在のお悩み" value="あんよについて"> あんよについて</label>
+            <label><input type="checkbox" name="現在のお悩み" value="だっこについて"> だっこについて</label>
+            <label><input type="checkbox" name="現在のお悩み" value="ねんねについて"> ねんねについて</label>
+            <label><input type="checkbox" name="現在のお悩み" value="授乳・離乳食について"> 授乳・離乳食について</label>
+            <label><input type="checkbox" name="現在のお悩み" value="ママの身体について"> ママの身体について（凝りがある・痛みがあるなど）</label>
+            <label><input type="checkbox" name="現在のお悩み" value="ママの心が疲れている"> ママの心が疲れている</label>
+            <label><input type="checkbox" name="現在のお悩み" value="悩みや不安が多い"> 悩みや不安が多い</label>
+            <label><input type="checkbox" name="現在のお悩み" value="自分と我が子に合った子育てがわからない"> 自分と我が子に合った子育てがわからない</label>
+            <label><input type="checkbox" name="現在のお悩み" value="その他"> その他</label>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="ap-detail">お悩みについて、具体的にどんな所が気になっているのか教えてください</label>
+          <textarea id="ap-detail" name="お悩みの詳細" placeholder="気になっていることを、そのままお書きください"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label>教室でお撮りする写真のSNS等への掲載可否 ＊</label>
+          <div class="radio-group">
+            <label><input type="radio" name="写真の掲載可否" value="掲載OK" required> 掲載OK</label>
+            <label><input type="radio" name="写真の掲載可否" value="ママの顔を隠せば掲載OK"> ママの顔を隠せば掲載OK</label>
+            <label><input type="radio" name="写真の掲載可否" value="子どもの顔を隠せば掲載OK"> 子どもの顔を隠せば掲載OK</label>
+            <label><input type="radio" name="写真の掲載可否" value="親子ともに顔を隠せば掲載OK"> 親子ともに顔を隠せば掲載OK</label>
+            <label><input type="radio" name="写真の掲載可否" value="感想のみ掲載OK"> 感想のみ掲載OK</label>
+            <label><input type="radio" name="写真の掲載可否" value="掲載NG"> 掲載NG</label>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>この教室を知ったきっかけを教えてください ＊</label>
+          <div class="radio-group">
+            <label><input type="radio" name="知ったきっかけ" value="Instagram" required> Instagram</label>
+            <label><input type="radio" name="知ったきっかけ" value="公式LINE"> 公式LINE</label>
+            <label><input type="radio" name="知ったきっかけ" value="ご紹介"> ご紹介</label>
+            <label><input type="radio" name="知ったきっかけ" value="ホームページ"> ホームページ</label>
+            <label><input type="radio" name="知ったきっかけ" value="検索"> 検索</label>
+            <label><input type="radio" name="知ったきっかけ" value="その他"> その他</label>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="ap-email">メールアドレス ＊</label>
+          <input type="email" id="ap-email" name="email" placeholder="メールアドレスを入力" required>
+        </div>
+
+        <div class="form-field">
+          <label for="ap-tel">電話番号 ＊</label>
+          <p class="field-note" style="margin:0 0 8px;">レッスンの急な中止など、緊急連絡先として使用します。</p>
+          <input type="tel" id="ap-tel" name="電話番号" placeholder="例：090-1234-5678" required>
+        </div>
+
+        <div class="form-field">
+          <label for="ap-message">そのほか、なにかありましたら自由にご記入ください</label>
+          <textarea id="ap-message" name="メッセージ" placeholder="ご質問やご要望など、なんでもどうぞ"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-dark btn-block">この内容で申し込む</button>
+        <p class="form-status"></p>
+      </div>
+    </form>
+
+    <p class="center" style="margin-top:2em;">
+      先に聞いてみたいことがあれば、
+      <a href="https://hpjouynr.autosns.app/line" target="_blank" rel="noopener" class="link-arrow">LINEでも相談できます →</a>
+    </p>
+  </div>
+</section>
 
 <div data-include="components/footer.html"></div>
 <script src="js/main.js"></script>
