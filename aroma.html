@@ -149,7 +149,7 @@
 
     <div class="flow-list">
       <article class="flow-item"><span class="num">STEP 1</span><div><h3>フォームからお申し込み</h3><p>このページのフォームから、ご希望の受講日をお知らせください。</p></div></article>
-      <article class="flow-item"><span class="num">STEP 2</span><div><h3>振込先のご案内</h3><p>お申し込み後、こちらから振込先をご案内します。</p></div></article>
+      <article class="flow-item"><span class="num">STEP 2</span><div><h3>振込先のご案内</h3><p>お申し込み後、公式LINEから振込先をご案内します。友だち追加がまだの方は、先に登録をお願いします。</p></div></article>
       <article class="flow-item"><span class="num">STEP 3</span><div><h3>お振込み</h3><p>ご案内した口座へお振込みをお願いします。</p></div></article>
       <article class="flow-item"><span class="num">STEP 4</span><div><h3>スターターキットの郵送</h3><p>ご入金の確認後、スターターキットを郵送します。</p></div></article>
       <article class="flow-item"><span class="num">STEP 5</span><div><h3>事前の準備</h3><p>キットが届きましたら中身をご確認いただき、テキストを事前にご一読ください。</p></div></article>
@@ -202,9 +202,17 @@
       <p class="page-lead" style="margin-top:20px;">＊印は入力必須の項目です。</p>
     </div>
 
+    <div class="callout-box" style="background:var(--color-bg-card); text-align:left; margin-bottom:26px;">
+      <p style="margin:0 0 14px;"><strong>お申し込みの前に、公式LINEの友だち追加をお願いします。</strong></p>
+      <p style="margin:0 0 18px;">振込先のご案内や、当日までのやりとりは公式LINEからお送りします。</p>
+      <div class="box-actions" style="justify-content:flex-start;">
+        <a class="btn btn-primary" href="https://hpjouynr.autosns.app/line" target="_blank" rel="noopener">公式LINEを友だち追加する →</a>
+      </div>
+    </div>
+
     <form class="card ajax-form" action="https://formspree.io/f/xrpzrbpb" method="POST"
           data-sheet="アロマ講座申し込み"
-          data-done-text="お申し込みありがとうございます。振込先のご案内を、折り返しお送りします。">
+          data-done-text="お申し込みありがとうございます。公式LINEから振込先をご案内しますので、少々お待ちください。">
       <div class="card-body">
         <input type="hidden" name="_subject" value="【アロマ認定講師講座】お申し込み">
 
@@ -216,6 +224,12 @@
         <div class="form-field">
           <label for="ar-email">メールアドレス ＊</label>
           <input type="email" id="ar-email" name="email" placeholder="メールアドレスを入力" required>
+        </div>
+
+        <div class="form-field">
+          <label for="ar-line">公式LINEのご登録名 ＊</label>
+          <p class="field-note" style="margin:0 0 8px;">LINEでご案内するため、上のお名前と違う場合はLINEでの表示名をお書きください。</p>
+          <input type="text" id="ar-line" name="LINEのご登録名" placeholder="例：はなこ" required>
         </div>
 
         <div class="form-field">
