@@ -243,6 +243,135 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
   });
 }
 
+// ---------- ファーストビューの「次回の開催日」 ----------
+
+// ページを開いてすぐ、日時と申し込みボタンが目に入るようにするブロック。
+// data/events.json から生成するので、イベントを足せば自動で入れ替わる
+function nextDateCard(ev, applyTarget) {
+  const [y, m, d] = ev.date.split("-").map(Number);
+  const wd = DOW[new Date(y, m - 1, d).getDay()];
+  const full = ev.remaining != null && ev.remaining <= 0;
+
+  const rows = [];
+  if (ev.place) rows.push(ev.place);
+  const fee = [];
+  if (ev.price != null) fee.push(`参加費 ${yen(ev.price)}（税込）`);
+  if (ev.capacity != null) fee.push(`定員${ev.capacity}名`);
+  if (fee.length) rows.push(fee.join("／"));
+
+  const slots = ev.remaining != null && ev.capacity != null
+    ? `<span class="nd-slots${full ? " is-full" : ""}">${full ? "満席" : `残り${ev.remaining}枠`}</span>`
+    : "";
+
+  const action = full
+    ? `<a class="btn btn-outline btn-block" href="https://hpjouynr.autosns.app/line" target="_blank" rel="noopener">キャンセル待ちをLINEで相談する</a>`
+    : `<a class="btn btn-primary btn-block" href="${applyTarget}" data-date="${ev.date}">この日を予約する</a>`;
+
+  return `
+    <div class="nd-card${full ? " is-full" : ""}">
+      <p class="nd-top">
+        <span class="nd-date">${m}月${d}日<span class="nd-wd">（${wd}）</span></span>
+        ${ev.time ? `<span class="nd-time">${ev.time}</span>` : ""}
+        ${slots}
+      </p>
+      ${rows.length ? `<p class="nd-rows">${rows.join("<br>")}</p>` : ""}
+      ${action}
+    </div>`;
+}
+
+// 予約ボタンから、申し込みフォームの「参加希望日」を選んだ状態でスクロールする
+function pickDateAndScroll(dateStr, target) {
+  const select = document.getElementById("ef-date");
+  if (select) {
+    const [y, m, d] = dateStr.split("-").map(Number);
+    const prefix = `${m}月${d}日（`;
+    const opt = Array.from(select.options).find((o) => o.value.startsWith(prefix));
+    if (opt) {
+      select.value = opt.value;
+      select.classList.add("is-picked");
+      setTimeout(() => select.classList.remove("is-picked"), 2000);
+    }
+  }
+  const el = document.querySelector(target);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function initNextDates() {
+  const root = document.getElementById("next-dates");
+  if (!root) return;
+
+  const kind = root.dataset.kind || "";
+  const applyTarget = root.dataset.apply || "#apply";
+  const limit = Number(root.dataset.limit || 2);
+
+  const events = await loadEvents();
+  const now = new Date();
+  const todayKey = formatDateKey(now.getFullYear(), now.getMonth(), now.getDate());
+  const upcoming = events
+    .filter((ev) => ev.date >= todayKey && (!kind || kindOf(ev) === kind))
+    .slice(0, limit);
+
+  if (!upcoming.length) {
+    root.innerHTML = `
+      <p class="nd-head">次回の開催日</p>
+      <div class="nd-card">
+        <p class="nd-rows">次回の日程はただいま調整中です。決まり次第、このページとLINEでお知らせします。</p>
+        <a class="btn btn-primary btn-block" href="${applyTarget}">日程が決まったら知らせてもらう</a>
+      </div>`;
+    return;
+  }
+
+  root.innerHTML = `
+    <p class="nd-head">次回の開催日</p>
+    <div class="nd-list">${upcoming.map((ev) => nextDateCard(ev, applyTarget)).join("")}</div>
+    <p class="nd-more"><a href="calendar.html" class="link-arrow">ほかの日程も見る →</a></p>`;
+
+  bindDateButtons(root, applyTarget);
+  initStickyBook(upcoming[0], applyTarget);
+}
+
+function bindDateButtons(root, applyTarget) {
+  root.querySelectorAll("[data-date]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      pickDateAndScroll(btn.dataset.date, applyTarget);
+    });
+  });
+}
+
+// 画面下にいつも出しておく予約バー。申し込みフォームが見えている間は隠す
+function initStickyBook(ev, applyTarget) {
+  const bar = document.getElementById("sticky-book");
+  if (!bar || !ev) return;
+
+  const [y, m, d] = ev.date.split("-").map(Number);
+  const wd = DOW[new Date(y, m - 1, d).getDay()];
+  const full = ev.remaining != null && ev.remaining <= 0;
+  const start = ev.time ? ev.time.split("〜")[0] : "";
+
+  bar.innerHTML = `
+    <div class="sb-info">
+      <span class="sb-label">次回</span>
+      <span class="sb-date">${m}/${d}（${wd}）${start ? ` ${start}〜` : ""}</span>
+      ${ev.remaining != null ? `<span class="sb-slots">${full ? "満席" : `残り${ev.remaining}枠`}</span>` : ""}
+    </div>
+    ${full
+      ? `<a class="btn btn-outline sb-btn" href="https://hpjouynr.autosns.app/line" target="_blank" rel="noopener">LINEで相談</a>`
+      : `<a class="btn btn-primary sb-btn" href="${applyTarget}" data-date="${ev.date}">予約する</a>`}`;
+
+  bindDateButtons(bar, applyTarget);
+  bar.hidden = false;
+
+  // フォームが画面に入ったらバーは役目を終えるので隠す
+  const applyEl = document.querySelector(applyTarget);
+  if (applyEl && "IntersectionObserver" in window) {
+    new IntersectionObserver(
+      ([entry]) => bar.classList.toggle("is-hidden", entry.isIntersecting),
+      { threshold: 0 }
+    ).observe(applyEl);
+  }
+}
+
 // ---------- イベント申し込みフォームの日程欄 ----------
 
 async function initEventForm() {
@@ -342,7 +471,9 @@ async function initCalendarPage() {
   let viewYear = now.getFullYear();
   let viewMonth = now.getMonth();
 
-  const detailEl = document.querySelector(root.getAttribute("data-detail-target") || "");
+  // data-detail-target が無いページもあるので、空文字で querySelector しないようにする
+  const detailSel = root.getAttribute("data-detail-target");
+  const detailEl = detailSel ? document.querySelector(detailSel) : null;
 
   function selectDay(dateKey) {
     if (detailEl) {
@@ -411,4 +542,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   initForms();
   initCalendarPage();
   initEventForm();
+  initNextDates();
 });

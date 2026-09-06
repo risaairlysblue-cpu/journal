@@ -3172,6 +3172,235 @@ p,
   margin: 0 auto;
 }
 
+/* ファーストビューの「次回の開催日」。
+   ページを開いた時点で日時と予約ボタンが見えるようにするブロック */
+.next-dates {
+  max-width: 520px;
+  margin: 26px auto 0;
+  text-align: left;
+}
+
+/* 次回の開催日を載せるファーストビューは、日程と予約ボタンが
+   早く目に入るように上半分を詰める */
+.page-hero.has-next { padding-top: 44px; padding-bottom: 64px; }
+.page-hero.has-next .nukumori-logo { margin-bottom: 14px; }
+.page-hero.has-next .nukumori-logo img { width: min(112px, 30vw); }
+.page-hero.has-next h1 {
+  margin-bottom: 16px;
+  font-size: clamp(24px, 3.2vw, 42px);
+}
+
+.nd-head {
+  margin: 0 0 8px;
+  text-align: center;
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.nd-list {
+  display: grid;
+  gap: 12px;
+}
+
+.nd-card {
+  padding: 20px 20px 18px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.nd-card.is-full { opacity: 0.72; }
+
+.nd-top {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 0 0 8px;
+}
+
+.nd-date {
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.nd-wd {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nd-time {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.nd-slots {
+  padding: 3px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--color-pink-tag);
+  color: var(--color-pink-tag-text);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nd-slots.is-full {
+  background: var(--color-bg);
+  color: var(--color-text-soft);
+}
+
+.nd-rows {
+  margin: 0 0 16px;
+  color: var(--color-text-soft);
+  font-size: 13.5px;
+  line-height: 1.85;
+  word-break: auto-phrase;
+  text-wrap: pretty;
+}
+
+.nd-more {
+  margin: 14px 0 0;
+  text-align: center;
+}
+
+/* 画面下にいつも出ている予約バー（ぬくもりページ） */
+body:has(.sticky-book) { padding-bottom: 88px; }
+
+.sticky-book {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 11px 16px calc(11px + env(safe-area-inset-bottom));
+  background: rgba(255, 253, 249, 0.96);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--color-border);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.sticky-book.is-hidden {
+  transform: translateY(110%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sb-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px 8px;
+  min-width: 0;
+}
+
+.sb-label {
+  color: var(--color-text-soft);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.sb-date {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  white-space: nowrap;
+}
+
+.sb-slots {
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--color-pink-tag);
+  color: var(--color-pink-tag-text);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sb-btn {
+  flex: none;
+  min-height: 44px;
+  padding: 10px 24px;
+  font-size: 14px;
+}
+
+@media (max-width: 359px) {
+  .sb-date { font-size: 14px; }
+  .sb-btn { padding: 10px 18px; }
+  .sticky-book { gap: 10px; }
+}
+
+/* 予約ボタンから選ばれた日程を、一瞬だけ目立たせる */
+.form-field select.is-picked {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(201, 150, 138, 0.18);
+}
+
+/* PCでは日付・内容・ボタンを横一列にして、
+   スクロールなしで次回の予定と予約ボタンが収まるようにする */
+@media (min-width: 720px) {
+  .next-dates { max-width: 760px; }
+  .nd-list { gap: 10px; }
+
+  .nd-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 4px 22px;
+    padding: 16px 20px;
+  }
+
+  .nd-card .nd-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin: 0;
+  }
+
+  .nd-card .nd-rows { margin: 0; }
+
+  .nd-card .btn {
+    display: inline-flex;
+    width: auto;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 960px) {
+  .page-hero.has-next { padding-top: 34px; padding-bottom: 62px; }
+  .page-hero.has-next .nukumori-logo { margin-bottom: 12px; }
+  .page-hero.has-next .nukumori-logo img { width: 96px; }
+  .page-hero.has-next h1 {
+    margin-bottom: 14px;
+    font-size: 34px;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-hero.has-next { padding-top: 30px; padding-bottom: 52px; }
+  .page-hero.has-next .page-lead { font-size: 14px; line-height: 1.9; }
+  .next-dates { margin-top: 20px; }
+  .nd-card { padding: 16px 16px 15px; }
+}
+
+@media (max-width: 359px) {
+  .nd-card { padding: 15px 14px 14px; }
+  .nd-date { font-size: 20px; }
+  .nd-time { font-size: 14px; }
+}
+
 /* 関連リンクの一覧 */
 .link-list {
   display: grid;

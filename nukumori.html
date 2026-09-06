@@ -15,7 +15,7 @@
 <div data-include="components/header.html"></div>
 
 <!-- ファーストビュー -->
-<section class="page-hero center">
+<section class="page-hero center has-next">
   <div class="section-inner">
     <div class="nukumori-logo">
       <img src="images/logo-nukumori.png" alt="赤ちゃん発達相談室 ぬくもり" loading="eager" onerror="this.remove()">
@@ -23,13 +23,12 @@
     <p class="page-label">地域子育て支援</p>
     <h1>赤ちゃんの発達相談室<br>「ぬくもり」</h1>
     <p class="page-lead">
-      健診で「様子を見ましょう」と言われたあと、どこにも相談できないまま過ごす時間を、
-      地域で支えたい。<br class="pc-only">
-      そんな想いから生まれたプロジェクトです。
+      健診で「様子を見ましょう」と言われたあとの時間を、地域で支える発達相談室。<br class="pc-only">
+      <strong>MamaLima Roomが奈良で開催しています。</strong>
     </p>
-    <p class="page-lead" style="margin-top:1.4em;">
-      <strong>MamaLima Roomは、この「ぬくもり」を奈良で開催しています。</strong>
-    </p>
+
+    <!-- 次回の開催日（js/main.js が data/events.json から生成） -->
+    <div class="next-dates" id="next-dates" data-kind="nukumori" data-apply="#apply"></div>
   </div>
 </section>
 
@@ -200,6 +199,9 @@
     </p>
   </div>
 </section>
+
+<!-- 画面下にいつも出ている予約バー（js/main.js が次回の予定から生成） -->
+<div class="sticky-book" id="sticky-book" hidden></div>
 
 <div data-include="components/footer.html"></div>
 <script src="js/main.js"></script>
