@@ -118,6 +118,26 @@ function yen(n) {
   return `¥${n.toLocaleString()}`;
 }
 
+// 1日に複数の枠（AM／PM）があるイベントに対応する。
+// sessions が無い古い形（time だけ）も、そのまま1枠として扱う
+function sessionsOf(ev) {
+  if (Array.isArray(ev.sessions) && ev.sessions.length) return ev.sessions;
+  return ev.time ? [{ time: ev.time }] : [];
+}
+
+// 満席かどうか。定員（remaining）で管理するイベントと、
+// 枠ごとに満席になる個別レッスンの両方をここで判定する
+function isEventFull(ev) {
+  if (ev.remaining != null) return ev.remaining <= 0;
+  const sessions = sessionsOf(ev);
+  return sessions.length > 0 && sessions.every((s) => s.full);
+}
+
+// 一覧やカードに出す時間の文字列（満席の枠には印をつけない素の表示）
+function timeTextOf(ev) {
+  return sessionsOf(ev).map((s) => s.time).join(" ／ ");
+}
+
 function pad2(n) {
   return String(n).padStart(2, "0");
 }
@@ -173,15 +193,25 @@ function renderMonthGrid(gridEl, labelEl, year, month, eventsByDate, today, onDa
     if (dayEvents) {
       el.classList.add("has-event");
       el.title = dayEvents.map((e) => e.title).join(" / ");
-      // 種別ごとの印。同じ種別が重なっても印は1つにまとめる
-      const marks = [...new Set(dayEvents.map(kindOf))];
       const dots = document.createElement("span");
       dots.className = "day-marks";
-      marks.forEach((k) => {
-        const dot = document.createElement("i");
-        dot.className = `mark mark-${k}`;
-        dots.appendChild(dot);
-      });
+      if (dayEvents.every(isEventFull)) {
+        // その日の枠がすべて埋まっている日は「満」の印にする
+        el.classList.add("is-full");
+        el.title += "（満席）";
+        const badge = document.createElement("i");
+        badge.className = "mark mark-full";
+        badge.textContent = "満";
+        dots.appendChild(badge);
+      } else {
+        // 種別ごとの印。同じ種別が重なっても印は1つにまとめる
+        const marks = [...new Set(dayEvents.map(kindOf))];
+        marks.forEach((k) => {
+          const dot = document.createElement("i");
+          dot.className = `mark mark-${k}`;
+          dots.appendChild(dot);
+        });
+      }
       el.appendChild(dots);
       el.setAttribute("role", "button");
       el.setAttribute("tabindex", "0");
@@ -211,9 +241,9 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
 
   events.forEach((ev) => {
     const { m, d } = eventDateLabel(ev.date);
-    // 定員が未入力のイベントもあるので、数値が入っているときだけ満席判定する
+    // 定員が未入力のイベントもあるので、数値が入っているときだけ残り枠を出す
     const hasSlots = ev.remaining != null && ev.capacity != null;
-    const full = hasSlots && ev.remaining <= 0;
+    const full = isEventFull(ev);
     const card = document.createElement("div");
     card.className = "event-card" + (full ? " full" : "");
     // applyUrl（サイト内の申し込みフォーム）があればそちらを優先する
@@ -226,7 +256,8 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
 
     // 時間・場所・料金のうち、入力されているものだけを並べる
     const meta = [];
-    if (ev.time) meta.push(ev.time);
+    const timeText = timeTextOf(ev);
+    if (timeText) meta.push(timeText);
     if (ev.place) meta.push(ev.place);
     if (ev.price != null) meta.push(`¥${ev.price.toLocaleString()}（税込）`);
 
@@ -250,7 +281,7 @@ function renderEventList(listEl, events, { emptyText = "現在募集中のイベ
 function nextDateCard(ev, applyTarget) {
   const [y, m, d] = ev.date.split("-").map(Number);
   const wd = DOW[new Date(y, m - 1, d).getDay()];
-  const full = ev.remaining != null && ev.remaining <= 0;
+  const full = isEventFull(ev);
 
   const rows = [];
   if (ev.place) rows.push(ev.place);
@@ -271,7 +302,7 @@ function nextDateCard(ev, applyTarget) {
     <div class="nd-card${full ? " is-full" : ""}">
       <p class="nd-top">
         <span class="nd-date">${m}月${d}日<span class="nd-wd">（${wd}）</span></span>
-        ${ev.time ? `<span class="nd-time">${ev.time}</span>` : ""}
+        ${timeTextOf(ev) ? `<span class="nd-time">${timeTextOf(ev)}</span>` : ""}
         ${slots}
       </p>
       ${rows.length ? `<p class="nd-rows">${rows.join("<br>")}</p>` : ""}
@@ -346,8 +377,9 @@ function initStickyBook(ev, applyTarget) {
 
   const [y, m, d] = ev.date.split("-").map(Number);
   const wd = DOW[new Date(y, m - 1, d).getDay()];
-  const full = ev.remaining != null && ev.remaining <= 0;
-  const start = ev.time ? ev.time.split("〜")[0] : "";
+  const full = isEventFull(ev);
+  const timeText = timeTextOf(ev);
+  const start = timeText ? timeText.split("〜")[0] : "";
 
   bar.innerHTML = `
     <div class="sb-info">
@@ -386,7 +418,7 @@ async function initEventForm() {
   const upcoming = events.filter((ev) => {
     if (keyword && !ev.title.includes(keyword)) return false;
     if (new Date(ev.date) < today) return false;
-    return !(ev.remaining != null && ev.remaining <= 0);
+    return !isEventFull(ev);
   });
 
   select.innerHTML = "";
@@ -403,7 +435,7 @@ async function initEventForm() {
   upcoming.forEach((ev) => {
     const { m, d } = eventDateLabel(ev.date);
     const wd = "日月火水木金土"[new Date(ev.date).getDay()];
-    const label = `${m}${d}日（${wd}） ${ev.time || ""}　${ev.place || ""}`.trim();
+    const label = `${m}${d}日（${wd}） ${timeTextOf(ev)}　${ev.place || ""}`.trim();
     select.insertAdjacentHTML("beforeend", `<option value="${label}">${label}</option>`);
   });
   select.insertAdjacentHTML("beforeend",
@@ -425,22 +457,31 @@ function renderDayDetail(el, dateKey, dayEvents) {
 
   const items = dayEvents.map((ev) => {
     const k = kindOf(ev);
+
+    // 時間はAM／PMなど枠ごとに出し、埋まっている枠には「満席」をつける
+    const sessions = sessionsOf(ev)
+      .map((sn) => `<p class="detail-slot${sn.full ? " is-full" : ""}">${sn.time}${
+        sn.full ? '<span class="slot-tag">満席</span>' : ""}</p>`)
+      .join("");
+
     const rows = [];
-    if (ev.time) rows.push(ev.time);
     if (ev.place) rows.push(ev.place);
     if (ev.price != null) rows.push(`${yen(ev.price)}（税込）`);
     if (ev.note) rows.push(ev.note);
 
     const href = ev.applyUrl || ev.lineUrl;
     const isExternal = href && /^https?:/.test(href);
-    const full = ev.remaining != null && ev.remaining <= 0;
+    const full = isEventFull(ev);
     const link = !full && href
       ? `<a href="${href}"${isExternal ? ' target="_blank" rel="noopener"' : ""} class="link-arrow">${ev.applyLabel || "詳しく見る →"}</a>`
-      : (full ? '<span class="detail-full">満席</span>' : "");
+      // 枠ごとに「満席」を出しているときは、下にもう一度出さない
+      : (full && !sessionsOf(ev).some((sn) => sn.full)
+          ? '<span class="detail-full">満席</span>' : "");
 
     return `
-      <div class="detail-item">
+      <div class="detail-item${full ? " is-full" : ""}">
         <p class="detail-kind"><i class="mark mark-${k}"></i>${EVENT_KINDS[k].label}</p>
+        ${sessions}
         ${rows.map((r) => `<p class="detail-row">${r}</p>`).join("")}
         ${link}
       </div>`;
@@ -510,7 +551,9 @@ async function initCalendarPage() {
   draw();
 
   if (detailEl) {
-    const next = events.find((ev) => ev.date >= todayKey);
+    // 最初に開いておく日は、まだ空きのある直近の予定を優先する
+    const upcomingAll = events.filter((ev) => ev.date >= todayKey);
+    const next = upcomingAll.find((ev) => !isEventFull(ev)) || upcomingAll[0];
     if (next) {
       // 直近の予定がある月を開いておく
       const [ny, nm] = next.date.split("-").map(Number);

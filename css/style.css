@@ -3712,8 +3712,9 @@ body:has(.sticky-book) { padding-bottom: 88px; }
 
 .day-marks {
   display: flex;
+  align-items: center;
   gap: 3px;
-  min-height: 7px;
+  min-height: 16px;
 }
 
 /* 種別の印 */
@@ -3728,6 +3729,29 @@ body:has(.sticky-book) { padding-bottom: 88px; }
 .mark-private  { background: var(--color-primary); }
 .mark-group    { background: var(--color-sage); }
 .mark-nukumori { background: #b9a3cf; }
+
+/* 満席の印。丸ではなく「満」の文字で出す */
+.mark-full {
+  width: auto;
+  height: auto;
+  min-width: 17px;
+  padding: 1px 3px;
+  border-radius: 5px;
+  background: #9a8f88;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-style: normal;
+}
+
+/* 全部の枠が埋まった日は、空いている日と見分けがつくように落ち着かせる */
+.calendar-grid .day.is-full {
+  background: var(--color-bg);
+  color: var(--color-text-soft);
+  font-weight: 500;
+}
 
 /* 選択中の日 */
 .calendar-grid .day.is-selected {
@@ -3755,6 +3779,7 @@ body:has(.sticky-book) { padding-bottom: 88px; }
 }
 
 .calendar-legend .mark { width: 9px; height: 9px; }
+.calendar-legend .mark-full { width: auto; height: auto; }
 
 .calendar-legend span {
   margin-left: auto;
@@ -3790,6 +3815,36 @@ body:has(.sticky-book) { padding-bottom: 88px; }
 }
 
 .detail-item:last-child { margin-bottom: 0; }
+
+.detail-item.is-full { opacity: 0.8; }
+
+/* AM／PM など枠ごとの行 */
+.detail-slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.detail-slot.is-full {
+  color: var(--color-text-soft);
+  font-weight: 500;
+  text-decoration: line-through;
+  text-decoration-color: rgba(133, 122, 114, 0.5);
+}
+
+.slot-tag {
+  flex: none;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  background: #9a8f88;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
 
 .detail-kind {
   display: flex;
